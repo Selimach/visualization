@@ -1,0 +1,136 @@
+---
+title: "network_visualisation"
+author: "Selim Ach"
+date: "7/8/2020"
+output: html_document
+---
+
+```{r, echo= FALSE, warning=FALSE}
+
+library(readr)
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+
+library(stringr)
+
+library (ggplot2)
+library(tidyverse)
+
+#library graphs
+library(ggraph)
+library(igraph)
+library(viridis)
+
+library(DiagrammeR)
+library(networkD3)
+
+## Green color =  #69b3a2
+## Blue color = #3182bd"
+
+dec_2018 <- readr::read_tsv("~/Documents/fox_atm/Data/2018-12.tsv")
+
+#Filter only those with an awarded notification
+
+dec_2018_extr <- dec_2018 %>% 
+  filter (type == "Contract award notice")
+
+dec_2018_extr_avia <- dec_2018_extr %>% 
+   mutate(ATM_ATC=str_detect(description,"ATM") | str_detect(title,"ATM") | str_detect(title,pattern = "Air traffic") | str_detect(description,pattern = "Air") | str_detect(title,"ATC"))
+        
+res <- dec_2018_extr_avia %>% 
+  filter (ATM_ATC=="TRUE") %>% 
+  select(title,contractingBody,description,awarded)
+
+# Plot 1
+p <- simpleNetwork(res, height="200px", width="200px",
+        Source = 2,                 # column number of source
+        Target = 4,                 # column number of target
+        linkDistance = 9,          # distance between node. Increase this value to have more space between nodes
+        charge = -30,                # numeric value indicating either the strength of the node repulsion (negative value) or attraction (positive value)
+        fontSize = 14,               # size of the node names
+        fontFamily = "serif",       # font og node names
+        linkColour = "#665",        # colour of edges, MUST be a common colour for the whole graph
+        nodeColour = "#69b3a2",     # colour of nodes, MUST be a common colour for the whole graph
+        opacity = 0.9,              # opacity of nodes. 0=transparent. 1=no transparency
+        zoom = T                   # Can you zoom on the figure?
+        )
+p
+
+```
+Network showing relationship between entities (contracting and contractors), without links between entities. Color is green. 
+
+
+```{r, echo= FALSE, warning = FALSE}
+
+# Plot 2 
+library(tidyverse)
+library(viridis)
+library(patchwork)
+library(hrbrthemes)
+library(ggraph)
+library(igraph)
+library(networkD3)
+
+### Test
+graph=simpleNetwork(res)
+
+simpleNetwork(res,     
+        Source = 2,                 # column number of source
+        Target = 4,                 # column number of target
+        height = 1900,               # height of frame area in pixels
+        width = 1980,
+        linkDistance = 80,         # distance between node. Increase this value to have more space between nodes
+        charge = -30,              # numeric value indicating either the strength of the node repulsion (negative value) or attraction (positive value)
+        fontSize = 16,              # size of the node names
+        fontFamily = "mono",       # font og node names
+        linkColour = "#666",        # colour of edges, MUST be a common colour for the whole graph
+        nodeColour = "#3182bd",     # colour of nodes, MUST be a common colour for the whole graph
+        opacity = 0.9,              # opacity of nodes. 0=transparent. 1=no transparency
+        zoom = T                    # Can you zoom on the figure?
+        )
+```
+
+Network showing relationship between entities (contracting and contractors), with links between entities. Color is blue. 
+
+
+```{r, echo=FALSE, warning = FALSE}
+
+simpleNetwork(res,   
+        Source = 2,                 # column number of source
+        Target = 4,                 # column number of target
+        height = 1880,               # height of frame area in pixels
+        width = 1980,
+        linkDistance = 50,         # distance between node. Increase this value to have more space between nodes
+        charge = -30,              # numeric value indicating either the strength of the node repulsion (negative value) or attraction (positive value)
+        fontSize = 15,              # size of the node names
+        fontFamily = "serif",       # font og node names
+        linkColour = "#666",        # colour of edges, MUST be a common colour for the whole graph
+        nodeColour = "#69b3a2",     # colour of nodes, MUST be a common colour for the whole graph
+        opacity = 0.9,              # opacity of nodes. 0=transparent. 1=no transparency
+        zoom = T                    # Can you zoom on the figure?
+        )
+```
+
+Network showing relationship between entities (contracting and contractors), with links between entities. Color is green, different font 
+
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
