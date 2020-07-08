@@ -1,2 +1,2 @@
-# Visualization
+# visualization
 Exploring visualization capabilities with R
