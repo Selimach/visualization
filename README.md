@@ -1,4 +1,4 @@
-## The objective of this page is to show few examples of visualization that I produced using R capabilities
+## The objective of this page is to show few examples of visualization produced using R capabilities
 
 #### Descriptive statistics of the french urban transport netowrk, based on a set of data available online (source: RATP). This is an example of the type of analysis that can be performed easly using R (data manipulation and extraction graphics with ggplot2, cartograhy.)
 
