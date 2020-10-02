@@ -1,0 +1,84 @@
+---
+title: "airport"
+author: "Selim Ach"
+date: "10/2/2020"
+output: html_document
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, warning = FALSE, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(lubridate)
+library(readxl)
+library(janitor)
+library(scales)
+library(ggthemes)
+
+airport_traffic <- read_excel("Data/Airport_Traffic.xlsx", sheet = "DATA")
+
+airport_traffic <- airport_traffic %>%
+  clean_names() %>% 
+  mutate (flt_date = ymd(flt_date)) %>% 
+  arrange(flt_date)
+
+daily_traffic_2019 <- airport_traffic %>%
+  group_by(flt_date) %>%
+  summarise(total_flight = sum(flt_tot_1)) %>% 
+  filter(flt_date >= as.Date("2019-01-01")) %>% 
+  ungroup()
+```
+
+### Overview of the daily traffic
+```{r, warning = FALSE}
+
+ggplot(data = daily_traffic_2019,
+  mapping = aes(x = flt_date,y = total_flight)) +
+  geom_line(color = "darkblue")+
+  scale_y_continuous(label=comma)+
+  geom_smooth(method = "loess",color = "red")+
+  labs(title = "Airport daily traffic",
+       subtitle = "Take-offs and landings since January 2018",
+       x = "Date",
+       y = "Number of flights",
+       caption = "Source: Eurocontrol")+
+  theme_economist()+
+theme(axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0)))
+
+```
+### Overview of the traffic by major airport
+
+```{r, warning = FALSE}
+
+airport_traffic_country <- airport_traffic %>% 
+  filter(flt_date >= as.Date("2019-01-01")) %>% 
+  group_by(state_name,flt_date) %>% 
+  summarise(total_flight = sum(flt_tot_1)) %>% 
+  arrange(flt_date)
+
+ggplot(data = airport_traffic_country,
+  mapping = aes(x = flt_date,y = total_flight,group=state_name,position="dodge")) +
+  geom_line(color = "darkblue")+
+  facet_wrap(vars(state_name),scales="free_y",) +
+  geom_smooth(method = "loess",color = "red")+
+  labs(title = "Airport daily traffic by state
+       ",
+       x = "Date",
+       y = "Number of flights",
+       caption = "Source: Eurocontrol")+
+  theme_economist()+
+  theme (axis.text.x=element_text(angle=90, hjust=1))+
+  theme(axis.text = element_text(size = 9))+   
+  theme(plot.title = element_text(size = 20))+
+  theme(strip.text = element_text(size=9))+
+  theme(axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0)))
+
+```
+
+
+
+
+
+
