@@ -3,8 +3,8 @@
 ### These are few examples of visualization using R!
 --------------------------------------------------
 
-1 - Descriptive statistics of the french urban transport netowrk, based on a set of data available online (source: RATP). This is an example of the type of analysis that can be performed easly using R (data manipulation and extraction graphics with ggplot2, cartograhy.) This type of reports can be automated and produced every month for example.
+1 - Descriptive statistics of the french urban transport netowrk, based on a set of data available online (source: RATP). This is an example of the type of analysis that can be performed easly using R (data manipulation and extraction graphics with ggplot2, cartograhy.) This type of reports can be automated and produced every month for example (cf. Analyse_Urban_Traffic_Sample).
 
-2 - Airport daily traffic: this graph shows the number of flights operating in European airport since Jan 2019 (data sourced from Eurocontrol). This another example of a nice visualozation than can be obtained with ggplot 2 library.
+2 - Airport daily traffic: this graph shows the number of flights operating in European airport since Jan 2019 (data sourced from Eurocontrol). This another example of a nice visualozation than can be obtained with ggplot 2 library (cf. Airport_Daily_Traffic.png).
 
-3 - Creation of a complex chart showing the number of daily flights for the Eurocontrol member states using wrap techniques  
+3 - Creation of a complex chart showing the number of daily flights for the Eurocontrol member states using wrap techniques (Daily_traffic_by_state.png, associated code available in airport.Rmd)
