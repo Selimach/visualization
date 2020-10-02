@@ -4,7 +4,7 @@ author: "Selim Ach"
 date: "10/2/2020"
 output: html_document
 editor_options: 
-  chunk_output_type: inline
+  chunk_output_type: console
 ---
 
 ```{r setup, warning = FALSE, include=FALSE}
@@ -70,9 +70,9 @@ ggplot(data = airport_traffic_country,
        caption = "Source: Eurocontrol")+
   theme_economist()+
   theme (axis.text.x=element_text(angle=90, hjust=1))+
-  theme(axis.text = element_text(size = 9))+   
+  theme(axis.text = element_text(size = 8))+   
   theme(plot.title = element_text(size = 20))+
-  theme(strip.text = element_text(size=9))+
+  theme(strip.text = element_text(size=7))+
   theme(axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0)))
 
 ```
