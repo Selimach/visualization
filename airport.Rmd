@@ -63,7 +63,7 @@ ggplot(data = airport_traffic_country,
   geom_line(color = "darkblue")+
   facet_wrap(vars(state_name),scales="free_y",) +
   geom_smooth(method = "loess",color = "red")+
-  labs(title = "Airport daily traffic by state
+  labs(title = "Daily traffic by state
        ",
        x = "Date",
        y = "Number of flights",
