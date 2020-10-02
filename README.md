@@ -7,4 +7,4 @@
 
 2 - Airport daily traffic: this graph shows the number of flights operating in European airport since Jan 2019 (data sourced from Eurocontrol). This another example of a nice visualozation than can be obtained with ggplot 2 library (cf. Airport_Daily_Traffic.png).
 
-3 - Creation of a complex chart showing the number of daily flights for the Eurocontrol member states using wrap techniques (Daily_traffic_by_state.png, associated code available in airport.Rmd)
+3 - Creation of a complex chart showing the number of daily flights for each Eurocontrol member states using wrap techniques (Daily_Traffic_By_State.png, associated code available in airport.Rmd)
