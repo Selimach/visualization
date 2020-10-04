@@ -1,6 +1,6 @@
 #### Are you interested in converting data into valuable information ? Are you struggling with data manipulation in Excel ? Do you want to merge multiple sources of data and create powerful tables ? Do you want to create automated reports with professional graphs and maps ? 
 
-### These are few examples of visualization using R! I used for these examples the layout of "The Economist" magazine. 
+### These are few examples of visualization using R! I used for these examples the layout of "The Economist" magazine.
 
 --------------------------------------------------
 
