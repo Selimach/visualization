@@ -9,4 +9,4 @@
 
 3 - Creation of a complex chart showing the number of daily flights for each Eurocontrol member states using wrap techniques (Daily_Traffic_By_State.png, associated code available in airport.Rmd).
 
-4 - Loading and processing data from Eurostat on employment rates. Display of a chart showing the evolution of employment rates per country (top 5 countries highlighted), and the same information on a map. An automated report can be generated on a regular basis to update this information (cf. cartography html). 
+4 - Loading and processing data from Eurostat on employment rates. Display of a chart showing the evolution of employment rates per country (top 5 countries highlighted), and the same information on a map. An automated report can be generated on a regular basis to update this information (cf. cartography.pdf). 
