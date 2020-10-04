@@ -2,7 +2,9 @@
 title: "cartography"
 author: "Selim Ach"
 date: "04/10/2020"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r, warning = FALSE}
