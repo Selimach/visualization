@@ -1,0 +1,95 @@
+---
+title: "cartography"
+author: "Selim Ach"
+date: "04/10/2020"
+output: html_document
+---
+
+```{r, warning = FALSE}
+
+library(readxl)
+library(tidyverse)
+library(dplyr)
+library(janitor)
+library (ggplot2)
+library(ggthemes)
+library(directlabels)
+library(gghighlight)
+library(sf)
+library(mapview)
+library(mapedit)
+library(rnaturalearth)
+
+Eurostat <- read_excel("Data/Eurostat.xlsx", 
+    sheet = "Sheet 1", col_types = c("text", 
+        "numeric", "skip", "numeric", "skip", 
+        "numeric", "skip", "numeric", "skip", 
+        "numeric", "skip", "numeric", "skip", 
+        "numeric", "skip", "numeric", "skip", 
+        "numeric", "skip", "numeric", "skip", 
+        "numeric", "skip", "numeric", "skip",
+        "numeric", "skip", "numeric"), 
+    skip = 9,range = "A10:AB52") %>% 
+  rename(country=time)
+
+# Removing the first raw
+Eurostat <- Eurostat[-c(1),]
+
+Eurostat_countries<-Eurostat[-c(1,2,3),] 
+
+# Cleaning issue with Germany and France
+
+Eurostat_countries$country[Eurostat_countries$country == "Germany (until 1990 former territory of the FRG)"] <- "Germany"
+
+# Removing France and replacing France (metropolitan) by France
+Eurostat_countries<-Eurostat_countries[-c(10),] 
+Eurostat_countries$country[Eurostat_countries$country == "France (metropolitan)"] <- "France"
+```
+
+```{r, warning = FALSE}
+# Plotting chart
+Eurostat_countries_long <- Eurostat_countries %>%
+  pivot_longer(!country, names_to = "year", values_to = "employment_rate")
+
+Eurostat_countries_long %>% 
+ggplot(mapping = aes(x = year, y=employment_rate, group=country, color=country)) +
+  geom_line()+
+  scale_colour_discrete(guide = 'none')+
+  gghighlight(max(employment_rate))+
+  theme_economist() +
+  theme(axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0)))+
+  labs(title = "Employment rate per country",
+       subtitle = "Annual difference between the employment rates of men and women aged 20-64",
+       x = "Year",
+       y = "Percentage of total population",
+       caption = "Source: Eurostat")
+
+```
+
+```{r, warning = FALSE}
+
+worldmap <- ne_countries(scale = 'medium', type = 'map_units',
+                         returnclass = 'sf')
+
+europe_cropped <- st_crop(worldmap, xmin = -20, xmax = 45,
+                                    ymin = 30, ymax = 73)
+
+# Joining table to retrive the information on employment rate
+europe_cropped_rate <- europe_cropped %>%
+  left_join(Eurostat_countries_long, c("admin" = "country"))
+
+# Displaying the information on the European area
+ggplot() +
+  geom_sf(
+  data = europe_cropped_rate,
+  mapping = aes(fill = employment_rate)) +
+  theme_void()+
+  theme(legend.title=element_blank())+
+  labs(title = "Gender employment gap in EU",
+       subtitle = "Annual difference between the employment rates of men and women aged 20-64",
+       caption = "Source: Eurostat")
+
+
+```
+
+
