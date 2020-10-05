@@ -16,5 +16,5 @@
 #### 4 - Employment rates in Europe
 #### Display of a chart showing the evolution of employment rates per country (with only few countries highlighted) based on data sourced from Euro stat.  Display of information on a map. A pd can be generated to display this information and the code can be hidden for non-technical audience (cf. cartography.pd). 
 
-5 - Fast food restaurants
-Display of a chart showing the number of calories by menu and restaurant (cf. restaurant.pdf) and how to transform data in a table into a more insightful representation. 
+#### 5 - Fast food restaurants
+#### Display of a chart showing the number of calories by menu and restaurant (cf. restaurant.pdf) or how to transform data in a table into a more insightful representation. 
