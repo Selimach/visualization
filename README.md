@@ -10,6 +10,8 @@ a - Descriptive statistics of the french urban transport network, based on a set
 
 b - Analysis of mobility trends in 11 European cities since March 2020. Creation of a multidimensional map to benchmark cities.
 
+c - Analysis of the road accidents in Geneva by displaying information on a map showing the location of occurrence. The last multidimensional graph shows accidents split meteorological conditions. 
+
 #### Air transport 
 a - Display of the number of daily flights operated within European airports since Jan 2019 (data sourced from Eurocontrol). It is another example of a clear visualization that can be obtained with ggplot2 library.
 
