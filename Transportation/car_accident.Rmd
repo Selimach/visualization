@@ -3,8 +3,8 @@ title: "accident"
 author: "Selim Ach"
 date: "10/15/2020"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 ```{r,warning = FALSE, echo = FALSE}
@@ -43,8 +43,6 @@ map <- OpenStreetMap::openmap(
   lowerRight = c(46.228066, 6.195431),
   type = "osm")
 
-autoplot(map)
-
 map_latlon <- openproj(map, projection = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
 
 autoplot.OpenStreetMap(map_latlon) +
@@ -55,7 +53,7 @@ autoplot.OpenStreetMap(map_latlon) +
     color = "dodgerblue4"
   ) +
   labs(
-    title = "Car accidents in Geneva",
+    title = "Road accidents in Geneva",
     y = "Latitude",
     x = "Longitude",
     caption = "Source: SITG"
@@ -78,7 +76,7 @@ autoplot.OpenStreetMap(map_latlon) +
   ) +
   facet_wrap(vars(conditions_meteo))+
   labs(
-    title = "Car accidents in Geneva",
+    title = "Road accidents in Geneva",
     y = "Latitude",
     x = "Longitude",
     caption = "Source: SITG"
