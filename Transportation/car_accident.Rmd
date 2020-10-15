@@ -9,6 +9,8 @@ output:
 
 ```{r,warning = FALSE, echo = FALSE}
 
+# loading library
+
 library(readr)
 library(OpenStreetMap)
 library(tidyverse)
