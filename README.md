@@ -6,7 +6,9 @@
 
 #### 1 - Transportation 
 #### Urban transport
-Descriptive statistics of the french urban transport network, based on a set of data available online (source: RATP).  This type of reports can be automatically generated and updated for example each month.
+a - Descriptive statistics of the french urban transport network, based on a set of data available online (source: RATP).  This type of reports can be automatically generated and updated for example each month.
+
+b - Analysis of the mobility evolution in 11 European cities since March 2020. Creation of a multidimensional map to benchmark cities.
 
 #### Air transport 
 a - Display of the number of daily flights operated within European airports since Jan 2019 (data sourced from Eurocontrol). It is another example of a clear visualization that can be obtained with ggplot2 library.
