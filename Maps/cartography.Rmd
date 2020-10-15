@@ -7,7 +7,7 @@ output:
   html_document: default
 ---
 
-```{r, warning = FALSE}
+```{r, warning = FALSE, echo = FALSE}
 
 library(readxl)
 library(tidyverse)
@@ -48,7 +48,7 @@ Eurostat_countries<-Eurostat_countries[-c(10),]
 Eurostat_countries$country[Eurostat_countries$country == "France (metropolitan)"] <- "France"
 ```
 
-```{r, warning = FALSE}
+```{r, warning = FALSE,echo = FALSE}
 # Plotting chart
 Eurostat_countries_long <- Eurostat_countries %>%
   pivot_longer(!country, names_to = "year", values_to = "employment_rate")
@@ -68,7 +68,7 @@ ggplot(mapping = aes(x = year, y=employment_rate, group=country, color=country))
 
 ```
 
-```{r, warning = FALSE}
+```{r, warning = FALSE, echo = FALSE}
 
 worldmap <- ne_countries(scale = 'medium', type = 'map_units',
                          returnclass = 'sf')
@@ -78,7 +78,8 @@ europe_cropped <- st_crop(worldmap, xmin = -20, xmax = 45,
 
 # Joining table to retrive the information on employment rate
 europe_cropped_rate <- europe_cropped %>%
-  left_join(Eurostat_countries_long, c("admin" = "country"))
+  left_join(Eurostat_countries_long, c("admin" = "country")) %>% 
+  filter (year == 2018)
 
 # Displaying the information on the European area
 ggplot() +
@@ -87,10 +88,10 @@ ggplot() +
   mapping = aes(fill = employment_rate)) +
   theme_void()+
   theme(legend.title=element_blank())+
-  labs(title = "Gender employment gap in EU",
-       subtitle = "Annual difference between the employment rates of men and women aged 20-64",
-       caption = "Source: Eurostat")
-
+  labs(title = "Gender employment gap in EU (2018)",
+       subtitle = "Annual difference between the employment rates of men & women aged 20-64",
+       caption = "Source: Eurostat")+
+  theme(plot.title = element_text(hjust=0))
 
 ```
 
