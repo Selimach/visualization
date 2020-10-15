@@ -69,7 +69,7 @@ ggplot(data = Citymapper_long_filter_mar2020_eu,
 ```
 This graph indicates the evolution of the mobility index in major European cities based on data collected by "Citymapper". 
 
-It is interesting to note that mobiltiy in Paris seems to have resumed to (almost) pre-covid, while in other cities (e.g. Copenhagen), it is not yet the case.
+It is interesting to note that mobility in Paris seems to have resumed to (almost) pre-covid, while in other cities (e.g. Copenhagen), it is not yet the case.
 
 
 Note (definition of the index as per the website):
