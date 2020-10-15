@@ -48,6 +48,7 @@ Eurostat_countries<-Eurostat_countries[-c(10),]
 Eurostat_countries$country[Eurostat_countries$country == "France (metropolitan)"] <- "France"
 ```
 
+### Employment rate per country
 ```{r, warning = FALSE,echo = FALSE}
 # Plotting chart
 Eurostat_countries_long <- Eurostat_countries %>%
@@ -68,6 +69,7 @@ ggplot(mapping = aes(x = year, y=employment_rate, group=country, color=country))
 
 ```
 
+### Gender employment gap in EU - Map visualization
 ```{r, warning = FALSE, echo = FALSE}
 
 worldmap <- ne_countries(scale = 'medium', type = 'map_units',
@@ -92,6 +94,61 @@ ggplot() +
        subtitle = "Annual difference between the employment rates of men & women aged 20-64",
        caption = "Source: Eurostat")+
   theme(plot.title = element_text(hjust=0))
+
+```
+
+### Gender employment gap in EU - Differences over the years with a map visualization
+
+```{r, warning= FALSE, echo = FALSE}
+
+europe_cropped_rate_filter_year <- europe_cropped %>%
+  left_join(Eurostat_countries_long, c("admin" = "country")) %>% 
+  mutate (year = as.numeric(year)) %>% 
+  filter(year %in% c(2015,2016,2017,2018))
+
+quantile_vec <- europe_cropped_rate %>%
+  pull(employment_rate) %>%
+  quantile(probs = c(0,0.25, 0.5, 0.75, 1), na.rm = TRUE)
+
+labels <- tibble(
+  lab1 = quantile_vec,
+  lab2 = c(quantile_vec[2:length(quantile_vec)], NA)
+) %>%
+  slice(1:n() - 1) %>% # I remove the last row, since it has no meaning
+  mutate_all(round, digits = 1) %>% # I round to have no digits
+  mutate_all(paste0, "%") %>% # I add the dollar sign after the digits
+  mutate(labs = paste(lab1, lab2, sep = "-"))
+
+europe_cropped_rate_filter_year <- europe_cropped_rate_filter_year %>%
+  mutate(quantiles = cut(employment_rate,
+    breaks = quantile_vec,
+    labels = labels %>% pull(labs),
+    include.lowest = TRUE, # includes the lowest 'breaks' value
+    ordered_result = TRUE, # orders the factors/bins
+  )) %>%
+  filter(!is.na(sovereignt), !is.na(year))
+
+ggplot() +
+  # plot the data
+  geom_sf(
+    data = europe_cropped_rate_filter_year,
+    mapping = aes(fill = quantiles)
+  ) +
+  # use the blue colour scale, and set the na.value to grey
+  scale_fill_brewer(na.value = "grey50") +
+  # facet by year
+  facet_wrap(vars(year),nrow = 2) +
+  # change theme
+  theme_void() +
+  # change the position and title of the legend
+  guides(fill = guide_legend(label.position = "bottom")) +
+  # add labels
+  labs(
+    title = "Gender employment gap in EU",
+    subtitle = "Annual difference between the employment rates of mean & women aged 20-64",
+    caption = "Source: Eurostat",
+    fill = ""
+  )
 
 ```
 
