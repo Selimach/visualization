@@ -67,12 +67,16 @@ ggplot(data = Citymapper_long_filter_mar2020_eu,
   theme(axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0),vjust = 1.5))
 
 ```
-This graph indicates the evolution of the mobility index in major European cities based on data collected by "Citymapper". Interesting to note that while mobiltiy in Paris seems to have resumed to (almost) pre-covid, in other cities (e.g. Milan), it is not yet the case.
+This graph indicates the evolution of the mobility index in major European cities based on data collected by "Citymapper". 
 
-Note (about the index)
+It is interesting to note that while mobiltiy in Paris seems to have resumed to (almost) pre-covid, in other cities (e.g. Milan), it is not yet the case.
 
-The Citymapper Mobility Index is calculated by comparing trips planned in the Citymapper app to a recent typical usage period. Trips planned ('Get Me Somewhere' and related) are correlated to trips taken (GO mode). Typical usage period is defined as 4 weeks between Jan 6th and Feb 2nd, 2020. To better capture typical usage in certain cities we are using different periods in Paris (Feb 3rd to March 1st) and Hong Kong and Singapore (both Dec 2nd to Dec 22nd). A day is defined as midnight to midnight UTC, thus for certain cities may not correspond with calendar days. We update the data every day at 7am UTC.
 
-Users are public transport users and also use us for walking, cycling, and some micromobility and cabs (driving is not included). According to the provider, there are enough data points  to be confident that it represents a real change in behaviour. However, it is a sample set of general mobility and may not represent the real world exactly.
+
+Note (definition of the index as per the website):
+
+The Citymapper Mobility Index is calculated by comparing trips planned in the Citymapper app to a recent typical usage period. Trips planned ('Get Me Somewhere' and related) are correlated to trips taken (GO mode). Typical usage period is defined as 4 weeks between Jan 6th and Feb 2nd, 2020. To better capture typical usage in certain cities we are using different periods in Paris (Feb 3rd to March 1st) and Hong Kong and Singapore (both Dec 2nd to Dec 22nd). A day is defined as midnight to midnight UTC, thus for certain cities may not correspond with calendar days. Data are updated every day at 7am UTC.
+
+Users include public transport, and also walking, cycling,  some micromobility and to be confident that it represents a real change in behaviour. However, it is a sample set of general mobility and may not represent the real world exactly.
 
 
