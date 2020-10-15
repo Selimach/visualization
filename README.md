@@ -13,7 +13,7 @@ a - Display of the number of daily flights operated within European airports sin
 
 b - Creation of a complex multiple charts showing the number of daily flights for each Eurocontrol member states.
 
-c - Creation of various charts to benchamrk airlines on various routes.
+c - Creation of various charts to benchmark airlines on various routes.
 
 #### 2 - Employment rates in Europe
 Chart showing the evolution of employment rates per country (with only few countries highlighted) based on data sourced from Eurostat. Information can be also shown on a map. A pdf can be generated to display this information and the code can be hidden for non-technical audience. 
