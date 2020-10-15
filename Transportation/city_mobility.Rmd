@@ -1,0 +1,78 @@
+---
+title: "city_mobility"
+author: "Selim Ach"
+date: "15/10/2020"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r, warning = FALSE, echo = FALSE}
+
+library(readr)
+library (janitor)
+library(tidyverse)
+library(ggthemes)
+
+Citymapper <- read_csv("Data/Citymapper.csv",skip = 3) 
+   
+Citymapper <- Citymapper %>% 
+  clean_names() %>% 
+  arrange(date)
+
+# converting the table
+Citymapper_long <- Citymapper %>%
+  pivot_longer(!date,names_to = "city", values_to = "index")
+
+
+```
+
+```{r, warning = FALSE, echo = FALSE}
+
+# select only data after March 2020
+
+Citymapper_long_filter_mar2020 <- Citymapper_long %>% 
+  filter(date >= as.Date("2020-03-01"))
+
+# Select only specific cities
+
+nb_city <- Citymapper_long_filter_mar2020 %>% 
+  group_by(city) %>% 
+  count()
+
+cities <- c("lyon","milan","hambour","brussels", 
+            "berlin","amsterdam","madrid",
+            "lisbon","vienna","copenhagen","rome","paris")
+
+Citymapper_long_filter_mar2020_eu <- Citymapper_long %>% 
+  filter(date >= as.Date("2020-03-01")) %>% 
+  filter (city %in% cities)
+
+ggplot(data = Citymapper_long_filter_mar2020_eu,
+  mapping = aes(x = date,y = index ,group=city,position="dodge")) +
+  geom_line(color = "darkblue")+
+  facet_wrap(vars(city),scales="free_y",) +
+  geom_smooth(method = "loess",color = "red")+
+  labs(title = "Mobility Index in major cities
+       ",
+       x = "Date",
+       y = "% of the city moving",
+       caption = "Source: Citymapper.com/CMI")+
+  theme_economist()+
+  scale_y_continuous(labels = scales::percent)+
+  theme (axis.text.x=element_text(angle=0, hjust=1))+
+  theme(axis.text = element_text(size = 10))+   
+  theme(plot.title = element_text(size = 20))+
+  theme(strip.text = element_text(size=12,vjust = 1))+
+  theme(axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0),vjust = 1.5))
+
+```
+This graph indicates the evolution of the mobility index in major European cities based on data collected by "Citymapper". Interesting to note that while mobiltiy in Paris seems to have resumed to (almost) pre-covid, in other cities (e.g. Milan), it is not yet the case.
+
+Note (about the index)
+
+The Citymapper Mobility Index is calculated by comparing trips planned in the Citymapper app to a recent typical usage period. Trips planned ('Get Me Somewhere' and related) are correlated to trips taken (GO mode). Typical usage period is defined as 4 weeks between Jan 6th and Feb 2nd, 2020. To better capture typical usage in certain cities we are using different periods in Paris (Feb 3rd to March 1st) and Hong Kong and Singapore (both Dec 2nd to Dec 22nd). A day is defined as midnight to midnight UTC, thus for certain cities may not correspond with calendar days. We update the data every day at 7am UTC.
+
+Users are public transport users and also use us for walking, cycling, and some micromobility and cabs (driving is not included). According to the provider, there are enough data points  to be confident that it represents a real change in behaviour. However, it is a sample set of general mobility and may not represent the real world exactly.
+
+
