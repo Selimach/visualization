@@ -1,6 +1,6 @@
-#### Are you interested in converting data into valuable information ? Are you struggling with data manipulation in Excel ? Do you want to merge multiple sources of data and create powerful tables and charts ? Do you want to create automated reports with professional graphs and maps ? 
+#### Are you interested in converting data into insightful information ? Are you struggling with large dataset ? Do you want to merge multiple sources of data and create powerful tables and charts ? Do you want to create (automated) reports with powerful graphs and maps ? 
 
-### These are few examples of visualization using R!
+### These are few examples of visualization using R! 
 
 --------------------------------------------------
 
