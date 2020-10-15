@@ -4,7 +4,7 @@
 
 --------------------------------------------------
 
-#### 1 - Transportation 
+#### 1 - Transport 
 #### Urban transport
 a - Descriptive statistics of the french urban transport network, based on a set of data available online (source: RATP).  This type of reports can be automatically generated and updated for example each month.
 
@@ -19,8 +19,8 @@ b - Creation of a complex multiple charts showing the number of daily flights fo
 
 c - Creation of various charts to benchmark airlines on various routes.
 
-#### 2 - Employment rates in Europe
-Chart showing the evolution of employment rates per country (with only few countries highlighted) based on data sourced from Eurostat. Information can be also shown on a map. A pdf can be generated to display this information and the code can be hidden for non-technical audience. 
+#### 2 - Socio-economic
+a- Creation of maps showing the evolution of employment rates per country (with only few countries highlighted) based on data sourced from Eurostat. Information can be also shown on a map. A pdf can be generated to display this information and the code can be hidden for non-technical audience. 
 
-#### 3 - Fast food restaurants
-Chart showing the number of calories by menu and restaurant or how to transform data from a table into a more insightful representation. 
+#### 3 - Consumer goods
+a- Chart showing the number of calories by menu and restaurant or how to transform data from a table into a more insightful representation. 
