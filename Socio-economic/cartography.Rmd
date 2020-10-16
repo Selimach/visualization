@@ -1,5 +1,5 @@
 ---
-title: "cartography"
+title: "Cartography"
 author: "Selim Ach"
 date: "04/10/2020"
 output:
@@ -7,7 +7,7 @@ output:
   html_document: default
 ---
 
-```{r, warning = FALSE, echo = FALSE}
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
 library(readxl)
 library(tidyverse)
@@ -49,7 +49,7 @@ Eurostat_countries$country[Eurostat_countries$country == "France (metropolitan)"
 ```
 
 ### Employment rate per country
-```{r, warning = FALSE,echo = FALSE}
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
 # Plotting chart
 Eurostat_countries_long <- Eurostat_countries %>%
   pivot_longer(!country, names_to = "year", values_to = "employment_rate")
@@ -70,7 +70,7 @@ ggplot(mapping = aes(x = year, y=employment_rate, group=country, color=country))
 ```
 
 ### Gender employment gap in EU - Map visualization
-```{r, warning = FALSE, echo = FALSE}
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
 worldmap <- ne_countries(scale = 'medium', type = 'map_units',
                          returnclass = 'sf')
@@ -99,7 +99,7 @@ ggplot() +
 
 ### Gender employment gap in EU - Differences over the years with a map visualization
 
-```{r, warning= FALSE, echo = FALSE}
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
 europe_cropped_rate_filter_year <- europe_cropped %>%
   left_join(Eurostat_countries_long, c("admin" = "country")) %>% 
