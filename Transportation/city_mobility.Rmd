@@ -1,5 +1,5 @@
 ---
-title: "city_mobility"
+title: "Mobility Index"
 author: "Selim Ach"
 date: "15/10/2020"
 output:
@@ -7,7 +7,7 @@ output:
   html_document: default
 ---
 
-```{r, warning = FALSE, echo = FALSE}
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
 library(readr)
 library (janitor)
@@ -27,7 +27,7 @@ Citymapper_long <- Citymapper %>%
 
 ```
 
-```{r, warning = FALSE, echo = FALSE}
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
 # select only data after March 2020
 
