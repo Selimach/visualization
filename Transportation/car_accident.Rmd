@@ -1,5 +1,5 @@
 ---
-title: "accident"
+title: "Road accidents"
 author: "Selim Ach"
 date: "10/15/2020"
 output:
@@ -7,7 +7,7 @@ output:
   html_document: default
 ---
 
-```{r,warning = FALSE, echo = FALSE}
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
 # loading library
 
@@ -38,7 +38,7 @@ ggplot() +
 ```
 
 
-```{r, warning=FALSE, echo=FALSE}
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
 map <- OpenStreetMap::openmap(
   upperLeft = c(46.183158, 6.107025),
@@ -67,7 +67,7 @@ autoplot.OpenStreetMap(map_latlon) +
 ```
 The map showing the location of all car accidents in Geneva. But are there more accidents during a rainy day ?
 
-```{r, warning=FALSE, echo=FALSE}
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
 autoplot.OpenStreetMap(map_latlon) +
   geom_point(
