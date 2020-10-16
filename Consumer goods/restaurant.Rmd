@@ -1,5 +1,5 @@
 ---
-title: "restaurant"
+title: "Restaurant"
 author: "Selim Ach"
 date: "10/5/2020"
 output:
@@ -7,7 +7,7 @@ output:
   html_document: default
 ---
 
-```{r, warning =FALSE}
+```{r, warning =FALSE, echo = FALSE}
 
 library(readr)
 library(ggplot2)
@@ -20,15 +20,40 @@ head(food_data, 15)
 ggplot(food_data, aes(x = restaurant, y = calories, colour = restaurant)) +
   geom_jitter(width = 0.2)+
   theme_economist()+
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1.1,vjust = 0.8))+
   theme(legend.position="none")+
   theme(plot.title = element_text(size = 12, face = "bold"),
     legend.title = element_blank(), 
     legend.text=element_blank())+
-  labs(title = "Calories in Food Menus
-       ",
+  labs(title = "Calories in Food Menus ",
     subtitle = "Fast food restaurants",
-    x="Restaurant", y="Calories")
+    x="Restaurant", y="Calories")+
+  theme(plot.title = element_text(size = 14,vjust = 1.5))
 ```
 
+This chart is an overview of the fast food restaurants and associated menus with an indication of their level of calories. 
+
+```{r, warning =FALSE, echo = FALSE}
+
+library(tidyverse)
+
+food_data_calories<- food_data %>% 
+  arrange(-calories) %>% 
+  head(15)
+
+
+food_data %>%
+  ggplot( aes(x=restaurant, y=calories, color=sodium)) + 
+    geom_violin(aes(fill=sodium)) +
+  geom_jitter(height = 0, width = 0.4)+
+    xlab("class") +
+  theme_economist()+
+  theme(legend.position="none") +
+    labs(title = "Calories in Food Menus ",
+    subtitle = "Level of sodium in each menu",
+    x="Restaurant", y="Calories")+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1.1,vjust = 0.8))
+
+```
+In addition to the level of calories per menu, this chart allows also to display the level of sodium.
 
