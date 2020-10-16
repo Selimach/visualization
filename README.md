@@ -20,7 +20,7 @@ b - Creation of a complex multiple charts showing the number of daily flights by
 c - Creation of various charts to benchmark airlines on various routes.
 
 #### 2 - Socio-economic
-a- Creation of maps showing the evolution of employment rates per country (with the possibility to highlight only few countries ) based on data sourced from Eurostat. Information can be also shown on a map, for a particular on for several years to show trends.
+a- Creation of maps showing the evolution of employment rates per country (with the possibility to highlight only few countries ) based on data sourced from Eurostat. Information can be also shown on a map, for a particular year, or for several years to show trends.
 
 #### 3 - Consumer goods
 a- Chart showing the number of calories by menu and restaurant or how to transform data from a rough table into a more insightful representation. 
