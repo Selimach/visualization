@@ -65,7 +65,7 @@ autoplot.OpenStreetMap(map_latlon) +
   theme_void()+
     theme(plot.title = element_text(size = 14,hjust = 0.8, vjust = 1.5))
 ```
-The map showing the location of all car accidents in Geneva. But are there more accidents during a rainy day ?
+The map showing the location of all car accidents in Geneva. But are there more accidents during a rainy day ? The answer is in the next chart !
 
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
