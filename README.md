@@ -1,4 +1,4 @@
-#### Are you interested in converting data into insightful information ? Are you struggling with large dataset ? Do you want to merge multiple sources of data and create powerful tables and charts ? Do you want to create (automated) reports with professional graphs and maps ? 
+#### Are you interested in converting data into insightful information? Are you struggling with large dataset? Do you want to merge multiple sources of data and create powerful tables and charts? Do you want to create (automated) reports with professional graphs and maps? 
 
 ### These are few examples of visualization using R! 
 
@@ -23,4 +23,7 @@ c - Creation of various charts to benchmark airlines on various routes.
 a- Creation of maps showing the evolution of employment rates per country (with the possibility to highlight only few countries ) based on data sourced from Eurostat. Information can be also shown on a map, for a particular year, or for several years to show trends.
 
 #### 3 - Consumer goods
-a- Chart showing the number of calories by menu and restaurant or how to transform data from a rough table into a more insightful representation. 
+a - Chart showing the number of calories by menu and restaurant or how to transform data from a rough table into a more insightful representation. 
+
+#### 3 - Financial
+a - High-frequency charts of daily SMI (Swiss Market Index), static and dynamic (in html).
