@@ -1,14 +1,15 @@
 ---
-title: "airport"
+title: "Airport"
 author: "Selim Ach"
 date: "10/2/2020"
-output: html_document
-editor_options: 
+output:
+  pdf_document: default
+  html_document: default
+editor_options:
   chunk_output_type: console
 ---
 
-```{r setup, warning = FALSE, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
 library(tidyverse)
 library(lubridate)
@@ -31,8 +32,9 @@ daily_traffic_2019 <- airport_traffic %>%
   ungroup()
 ```
 
-### Overview of the daily traffic
-```{r, warning = FALSE}
+### Overview of the daily traffic in all European airports. Trend is added using a standard moving average technique.
+
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
 ggplot(data = daily_traffic_2019,
   mapping = aes(x = flt_date,y = total_flight)) +
@@ -48,9 +50,10 @@ ggplot(data = daily_traffic_2019,
 theme(axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0)))
 
 ```
-### Overview of the traffic by major airport
 
-```{r, warning = FALSE}
+### Overview of the daily traffic by country. 
+
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
 airport_traffic_country <- airport_traffic %>% 
   filter(flt_date >= as.Date("2019-01-01")) %>% 
