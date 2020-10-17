@@ -6,6 +6,8 @@
 
 ### These are few examples of visualization using R! 
 
+![](Images/Analytics.png)
+
 --------------------------------------------------
 
 #### 1 - Transportation 
