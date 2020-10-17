@@ -1,0 +1,89 @@
+---
+title: "SMI"
+author: "Selim Ach"
+date: "10/17/2020"
+output: html_document
+---
+
+
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
+
+# Librairies
+
+library(readr)
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+library(lubridate)
+library(ggthemes)
+
+# Importing file
+data_smi <- read_csv("Data/data_smi.csv")
+
+data_smi <- data_smi %>% 
+  mutate (date = dmy(date)) %>% 
+  arrange(date)
+
+```
+
+#### A lineplot (from January 1, 2015 to April 29, 2020).
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
+
+data_smi_extr_2015_2019 <- data_smi %>% 
+  filter(date >= as.Date("2015-01-01") & date <= as.Date("2020-04-29"))
+
+ggplot(
+  data = data_smi_extr_2015_2019,
+  mapping = aes(x = date,
+    y = price)
+) +
+  geom_line()+
+  labs(title = "SIM Values",
+       subtitle = "January 1, 2015 - April 29, 2020",
+       x = "Date",
+       y = "Price",
+       caption = "EPFL")+
+  theme_economist()
+
+```
+
+
+#### A line plotplot with a red line at CHF 8900.
+
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
+
+ggplot(data = data_smi_extr_2015_2019,mapping = aes(x = date,y = price)) +
+  geom_line()+
+  geom_hline(yintercept = 8900,colour = "red")+
+  labs(title = "SIM Values",
+       subtitle = "from January 1, 2019
+       Intercept at CHF 8900",
+       x="Date",
+       y = "Price",
+       caption = "EPFL")+
+  theme_economist()
+
+```
+
+#### A dynamic lineplot to be able to identify for example the date in 2019 for which the SMI value was below a specific value.
+
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
+
+library (plotly)
+
+ggplotly(
+  p = ggplot2::last_plot(),
+  width = NULL,
+  height = NULL,
+  tooltip = "all",
+  dynamicTicks = FALSE,
+  layerData = 1,
+  originalData = TRUE,
+  source = "A"
+)
+
+```
+
+
+
+
