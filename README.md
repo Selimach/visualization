@@ -1,5 +1,5 @@
 
-![ ](Images/Analytics.jpg?raw=true "Title")
+![ ](Images/Analytics5.gif?raw=true "Title")
 
 ## DATA VISUALIZATION
 
