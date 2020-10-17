@@ -61,7 +61,7 @@ ggplot(mapping = aes(x = year, y=employment_rate, group=country, color=country))
   gghighlight(max(employment_rate))+
   theme_economist() +
   theme(axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0)))+
-  labs(title = "Employment rate per country",
+  labs(title = "Employment in Europe",
        subtitle = "Annual difference between the employment rates of men and women aged 20-64",
        x = "Year",
        y = "Percentage of total population",
