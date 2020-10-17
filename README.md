@@ -1,5 +1,4 @@
 
-
 ## DATA VISUALIZATION
 
 #### Are you interested in converting data into insightful information? Are you struggling with large dataset? Do you want to merge multiple sources of data and create powerful tables and charts? Do you want to create (automated) reports with professional graphs and maps? 
