@@ -2,7 +2,9 @@
 title: "SMI"
 author: "Selim Ach"
 date: "10/17/2020"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 
@@ -48,7 +50,7 @@ ggplot(
 ```
 
 
-#### A line plotplot with a red line at CHF 8900.
+#### A lineplot with a red line at CHF 8900.
 
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
