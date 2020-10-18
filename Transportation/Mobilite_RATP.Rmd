@@ -3,8 +3,9 @@ title: "Mobilite_RATP"
 author: "Selim Ach"
 date: "18/10/2020"
 output:
-  html_document: default
+  
   pdf_document: default
+  html_document: default
 ---
 Ce document est rédigé à des fins d'illustration et l'analyse se base sur des données publiques provenant de la RATP. L'analyse statistique est faite avec le logiciel de programmation R, et a pour but de donner un aperçu des différentes possibilités de traitement de données, de production d'indicateurs et autres graphiques.
 
@@ -17,6 +18,7 @@ Ce jeu de données détaille le trafic des entrants directs sur le réseau ferr�
 Les « entrants directs » sont exclusivement les voyageurs provenant de la voie publique ou du réseau SNCF entrant sur le réseau de transport RATP en validant un titre de transport valide.
 
 Les voyageurs en correspondance (y compris correspondances métro/RER) sur le réseau RATP ne sont pas comptabilisés.
+
 
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
@@ -52,8 +54,8 @@ pos_geo2 <- pos_geo %>%
 ```
 
 ### Statistiques descriptives générales
-
 #### Fréquentation 
+
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
 options(scipen = 1000)
@@ -86,10 +88,11 @@ basic_stat <- trafic_annuel_reseau_2019 %>%
   summarize(Moyenne = mean(Trafic),
             Max = max(Trafic),
             Min = min(Trafic)) %>% 
-  kable(format.args = list(big.mark = ",")) %>% 
-  kable_styling()
+            kable(format.args = list(big.mark = ",")) %>% 
+            kable_styling()
   
 basic_stat
+
 ```
 
 ### Statistiques descriptives par ligne de métro et RER
@@ -100,7 +103,7 @@ max_stat_RER <- trafic_annuel_reseau_2019 %>%
   filter (Réseau == "RER") %>%
   filter (Trafic== max(Trafic)) %>% 
   select (Réseau,Station,Trafic) %>% 
-  kable(format.args = list(big.mark = ",")) %>% 
+  kable(format.args = list(big.mark = ",")) %>%
   kable_styling()
 
 max_stat_metro <- trafic_annuel_reseau_2019 %>% 
@@ -114,13 +117,16 @@ max_stat_metro <- trafic_annuel_reseau_2019 %>%
 
 #### Pic voyageurs - RER
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
+
 max_stat_RER
 
 ```
 
 #### Pic voyageurs - Métro
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
+
 max_stat_metro
+
 ```
 
 ### Répartition des voyageurs RER et Métro 
@@ -139,11 +145,8 @@ ggplot(trafic_annuel_reseau_2019_prop, aes(x = "", y = Proportion, fill = Résea
         subtitle = "Année 2019",
        caption = "Source: RATP")
 
-
 ```
 
-### Affichage cartographique 
-#### Les 4 stations de RER les plus fréquentées: Gare du Nord, la Défense, Chatelet, Gare de Lyon
 
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
@@ -162,10 +165,10 @@ res_final<-trafic_annuel_reseau_2019_full_RER %>%
   cbind(coord_RER)
 
 # Displaying a map with names and a popup description
-res_final %>% 
-  leaflet() %>%
-  addTiles() %>% 
-  addMarkers(lng=~long,lat=~latt)
+#res_final %>% 
+#leaflet() %>%
+#addTiles() %>% 
+#addMarkers(lng=~long,lat=~latt)
               
 ```
 
