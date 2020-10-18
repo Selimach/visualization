@@ -7,6 +7,10 @@ output:
   html_document: default
 ---
 
+This graph indicates the evolution of the mobility index in major European cities based on data collected by "Citymapper". 
+
+It is interesting to note that mobility in Paris seems to have resumed to (almost) pre-covid, while in other cities (e.g. Copenhagen), it is not yet the case.
+
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
 library(readr)
@@ -17,12 +21,12 @@ library(ggthemes)
 Citymapper <- read_csv("Data/Citymapper.csv",skip = 3) 
    
 Citymapper <- Citymapper %>% 
-  clean_names() %>% 
-  arrange(date)
+  #clean_names() %>% 
+  arrange(Date)
 
 # converting the table
 Citymapper_long <- Citymapper %>%
-  pivot_longer(!date,names_to = "city", values_to = "index")
+  pivot_longer(!Date,names_to = "City", values_to = "Index")
 
 
 ```
@@ -32,26 +36,27 @@ Citymapper_long <- Citymapper %>%
 # select only data after March 2020
 
 Citymapper_long_filter_mar2020 <- Citymapper_long %>% 
-  filter(date >= as.Date("2020-03-01"))
+  filter(Date >= as.Date("2020-03-01"))
 
 # Select only specific cities
 
 nb_city <- Citymapper_long_filter_mar2020 %>% 
-  group_by(city) %>% 
+  group_by(City) %>% 
   count()
 
-cities <- c("lyon","milan","hambour","brussels", 
-            "berlin","amsterdam","madrid",
-            "lisbon","vienna","copenhagen","rome","paris")
+cities <- c("Lyon","Milan","Hamburg","Brussels", 
+            "Berlin","Amsterdam","Madrid",
+            "Lisbon","Vienna","Copenhagen","Rome","Paris")
 
 Citymapper_long_filter_mar2020_eu <- Citymapper_long %>% 
-  filter(date >= as.Date("2020-03-01")) %>% 
-  filter (city %in% cities)
+  filter(Date >= as.Date("2020-03-01")) %>% 
+  filter (City %in% cities)
+
 
 ggplot(data = Citymapper_long_filter_mar2020_eu,
-  mapping = aes(x = date,y = index ,group=city,position="dodge")) +
+  mapping = aes(x = Date,y = Index ,group=City,position="dodge")) +
   geom_line(color = "darkblue")+
-  facet_wrap(vars(city)) +
+  facet_wrap(vars(City))+
   geom_smooth(method = "loess",color = "red")+
   labs(title = "Mobility Index in major cities",
        subtitle = "Year 2020",
@@ -68,9 +73,6 @@ ggplot(data = Citymapper_long_filter_mar2020_eu,
   theme(axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0),vjust = 1.5))
 
 ```
-This graph indicates the evolution of the mobility index in major European cities based on data collected by "Citymapper". 
-
-It is interesting to note that mobility in Paris seems to have resumed to (almost) pre-covid, while in other cities (e.g. Copenhagen), it is not yet the case.
 
 
 Note (definition of the index as per the website):
