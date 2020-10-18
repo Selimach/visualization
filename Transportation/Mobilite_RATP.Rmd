@@ -18,8 +18,7 @@ Les « entrants directs » sont exclusivement les voyageurs provenant de la voie
 
 Les voyageurs en correspondance (y compris correspondances métro/RER) sur le réseau RATP ne sont pas comptabilisés.
 
-```{r setup, someVar, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
 library(readr)
 library(ggplot2)
@@ -55,7 +54,7 @@ pos_geo2 <- pos_geo %>%
 ### Statistiques descriptives générales
 
 #### Fréquentation 
-```{r, warning = FALSE}
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
 options(scipen = 1000)
 
@@ -80,7 +79,7 @@ trafic_annuel_reseau_2019 %>%
 
 #### Moyenne, fréquentation maximale et minimale
 
-```{r}
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
 basic_stat <- trafic_annuel_reseau_2019 %>% 
   group_by(Réseau) %>% 
@@ -95,7 +94,7 @@ basic_stat
 
 ### Statistiques descriptives par ligne de métro et RER
 
-```{r, warning = FALSE}
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
 max_stat_RER <- trafic_annuel_reseau_2019 %>% 
   filter (Réseau == "RER") %>%
@@ -114,18 +113,18 @@ max_stat_metro <- trafic_annuel_reseau_2019 %>%
 ```
 
 #### Pic voyageurs - RER
-```{r}
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
 max_stat_RER
 
 ```
 
 #### Pic voyageurs - Métro
-```{r}
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
 max_stat_metro
 ```
 
 ### Répartition des voyageurs RER et Métro 
-```{r}
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
 trafic_annuel_reseau_2019_prop <- trafic_annuel_reseau_2019 %>% 
   group_by(Réseau) %>% 
@@ -146,7 +145,7 @@ ggplot(trafic_annuel_reseau_2019_prop, aes(x = "", y = Proportion, fill = Résea
 ### Affichage cartographique 
 #### Les 4 stations de RER les plus fréquentées: Gare du Nord, la Défense, Chatelet, Gare de Lyon
 
-```{r}
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
 trafic_annuel_reseau_2019_full_RER <- trafic_annuel_reseau_2019 %>%
   filter (Réseau =="RER") %>% 
