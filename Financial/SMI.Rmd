@@ -3,10 +3,11 @@ title: "SMI"
 author: "Selim Ach"
 date: "10/17/2020"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
+The objective of this report is to provie an example of a high frequency chart with the possibility to change the scale at which information are displayed (change frequency and time frame), but also add specific information on the chart itself.
 
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
@@ -28,13 +29,13 @@ data_smi <- data_smi %>%
 
 ```
 
-#### A lineplot (from January 1, 2015 to April 29, 2020).
+#### A lineplot (from January 1, 2015 to April 29, 2020) indicating the fluctuation of the SMI index.
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
 data_smi_extr_2015_2019 <- data_smi %>% 
   filter(date >= as.Date("2015-01-01") & date <= as.Date("2020-04-29"))
 
-ggplot(
+g1 <- ggplot(
   data = data_smi_extr_2015_2019,
   mapping = aes(x = date,
     y = price)
@@ -43,50 +44,95 @@ ggplot(
   labs(title = "SIM Values",
        subtitle = "January 1, 2015 - April 29, 2020",
        x = "Date",
-       y = "Price",
-       caption = "EPFL")+
-  theme_economist()
+       y = "Price (CHF)",
+       caption = "SMI")+
+  theme_economist()+
+  theme(plot.title = element_text(size = 14,vjust = 1.5))
+
+g1
+
 
 ```
 
 
-#### A lineplot with a red line at CHF 8900.
-
+#### A lineplot with a red line indicating a threshold is added to the plot.
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
-ggplot(data = data_smi_extr_2015_2019,mapping = aes(x = date,y = price)) +
+g2 <- ggplot(data = data_smi_extr_2015_2019,mapping = aes(x = date,y = price)) +
   geom_line()+
   geom_hline(yintercept = 8900,colour = "red")+
   labs(title = "SIM Values",
        subtitle = "from January 1, 2019
        Intercept at CHF 8900",
        x="Date",
-       y = "Price",
-       caption = "EPFL")+
-  theme_economist()
+       y = "Price (CHF)",
+       caption = "SMI")+
+  theme_economist()+
+  theme(plot.title = element_text(size = 14,vjust = 1.5))
+
+g2
 
 ```
 
-#### A dynamic lineplot to be able to identify for example the date in 2019 for which the SMI value was below a specific value.
-
+#### Another interesting feature is to add another chart to zoom or to show the general trend of the time series.
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
-library (plotly)
+library (patchwork)
 
-ggplotly(
-  p = ggplot2::last_plot(),
-  width = NULL,
-  height = NULL,
-  tooltip = "all",
-  dynamicTicks = FALSE,
-  layerData = 1,
-  originalData = TRUE,
-  source = "A"
+data_smi_extr_2020 <- data_smi %>% 
+  filter(date >= as.Date("2020-01-01") & date <= as.Date("2020-04-29"))
+
+g3 <- ggplot(
+  data = data_smi_extr_2020,
+  mapping = aes(x = date,
+    y = price)
+) +
+  geom_line()+
+  labs(title = "SIM Values",
+       subtitle = "Year 2020",
+       x = "Date",
+       y = "Price (CHF)",
+       caption = "SMI")+
+  theme_economist()+
+  theme(plot.title = element_text(size = 14,vjust = 1.5))+
+  scale_y_continuous(labels=function(x) format(x, big.mark = ".", decimal.mark = ",", scientific = FALSE))
+
+g1_bis <- ggplot(
+  data = data_smi_extr_2015_2019,
+  mapping = aes(x = date,
+    y = price)) +
+  geom_line(color = "red")+
+  labs(title = "January 1, 2015 - April 29, 2020")+
+  theme_economist()+
+  theme(plot.title = element_text(size = 12,vjust = 1.5))+
+  theme(axis.text.x = element_text(size = 5))+
+  theme(axis.text.y = element_text(size = 5))+
+  theme(axis.title.x = element_blank())+
+  theme(axis.title.y = element_blank())+
+  theme(plot.title = element_text(size = 10))+
+  scale_y_continuous(labels=function(x) format(x, big.mark = ".", decimal.mark = ",", scientific = FALSE))
+
+layout <- c(
+  area(
+    t = 2, 
+    l = 0,
+    b = 7,
+    r = 9
+  ),
+  area(
+    t = 0,
+    l = 6,
+    b = 2,
+    r = 9
+  )
 )
 
-#print(p)
+g3 + g1_bis +
+  plot_layout(design = layout)
 
 ```
+
+
 
 
 
