@@ -47,7 +47,8 @@ g1 <- ggplot(
        y = "Price (CHF)",
        caption = "SMI")+
   theme_economist()+
-  theme(plot.title = element_text(size = 14,vjust = 1.5))
+  theme(plot.title = element_text(size = 14,vjust = 1.5))+
+  scale_y_continuous(labels=function(x) format(x, big.mark = ".", decimal.mark = ",", scientific = FALSE))
 
 g1
 
@@ -68,7 +69,8 @@ g2 <- ggplot(data = data_smi_extr_2015_2019,mapping = aes(x = date,y = price)) +
        y = "Price (CHF)",
        caption = "SMI")+
   theme_economist()+
-  theme(plot.title = element_text(size = 14,vjust = 1.5))
+  theme(plot.title = element_text(size = 14,vjust = 1.5))+
+  scale_y_continuous(labels=function(x) format(x, big.mark = ".", decimal.mark = ",", scientific = FALSE))
 
 g2
 
