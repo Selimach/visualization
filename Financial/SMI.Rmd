@@ -84,6 +84,8 @@ ggplotly(
   source = "A"
 )
 
+#print(p)
+
 ```
 
 
