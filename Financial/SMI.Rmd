@@ -2,9 +2,7 @@
 title: "SMI"
 author: "Selim Ach"
 date: "10/17/2020"
-output:
-  html_document: default
-  pdf_document: default
+output: pdf_document
 ---
 
 The objective of this report is to provie an example of a high frequency chart with the possibility to change the scale at which information are displayed (change frequency and time frame), but also add specific information on the chart itself.
@@ -73,26 +71,6 @@ g2 <- ggplot(data = data_smi_extr_2015_2019,mapping = aes(x = date,y = price)) +
   scale_y_continuous(labels=function(x) format(x, big.mark = ".", decimal.mark = ",", scientific = FALSE))
 
 g2
-
-```
-
-#### Adding an interactive map.
-
-```{r}
-
-library (plotly)
-
-
-ggplotly(
-  g2 = ggplot2::last_plot(),
-  width = NULL,
-  height = NULL,
-  tooltip = "all",
-  dynamicTicks = FALSE,
-  layerData = 1,
-  originalData = TRUE,
-  source = "A"
-)
 
 ```
 
