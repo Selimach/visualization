@@ -4,8 +4,8 @@ Selim Ach
 10/15/2020
 
 The data that is analyzed in this report is related to road accidents
-occuring in Geneva. These type of data are usually presented in a table,
-but there are better ways, such as using maps.
+occurring in Geneva. These type of data are usually presented in a
+table, but there are better ways, such as using maps.
 
 <table>
 
@@ -473,15 +473,23 @@ Beau temps
 
 </table>
 
-Since the information on longitude and lattitude is available, it is
+Since the information on longitude and latitude is available, it is
 possible to plot on a graph the exact location of each accident.
 
 ![](car_accident_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
-![](car_accident_files/figure-gfm/unnamed-chunk-3-1.png)<!-- --> An
-extra layer with Geneva map is added on top of the location.
+![](car_accident_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+
+An extra layer with Geneva map is added on top of the location.
 
 ![](car_accident_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
-This map shows the location of all car accidents in Geneva. But are
-there more accidents during a rainy day ? The answer is in the chart \!
+These set of maps show the location of road accidents in Geneva during
+the year 2018. But are there more accidents during a rainy day ?
+Surprisingly the data indicates that accidents are occurring during
+sunny days.
+
+But let’s look at the number of accidents per year by developing a set
+of maps that will display accidents by year since 2015.
+
+![](car_accident_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->

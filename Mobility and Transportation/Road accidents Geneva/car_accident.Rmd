@@ -5,7 +5,7 @@ date: "10/15/2020"
 output: github_document
 ---
 
-The data that is analyzed in this report is related to road accidents occuring in Geneva. These type of data are usually presented in a table, but there are better ways, such as using maps.
+The data that is analyzed in this report is related to road accidents occurring in Geneva. These type of data are usually presented in a table, but there are better ways, such as using maps.
 
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
@@ -17,8 +17,13 @@ library(tidyverse)
 library(visdat)
 library(ggthemes)
 library(kableExtra)
+library (lubridate)
 
 accidents <- read_csv("Data/accidents_Geneva.csv")
+
+accidents <- accidents %>% 
+  mutate (date = ymd(date)) %>% 
+  mutate (year = year(date))
 
 accidents_extr <- accidents %>% 
   head(15) %>% 
@@ -28,7 +33,7 @@ knitr::kable(accidents_extr, caption = "Extract of the information on road accid
 
 ```
 
-Since the information on longitude and lattitude is available, it is possible to plot on a graph the exact location of each accident. 
+Since the information on longitude and latitude is available, it is possible to plot on a graph the exact location of each accident. 
 
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
@@ -44,7 +49,7 @@ ggplot() +
     y = "Latitude",
     x = "Longitude",
     title = "Road accidents in Geneva",
-    subtitle = "From 2010 to 2018",
+    subtitle = "All accidents from 2010 to 2018",
     caption = "Source: SITG"
   )
 
@@ -77,24 +82,58 @@ autoplot.OpenStreetMap(map_latlon) +
   theme_void()+
     theme(plot.title = element_text(size = 14,hjust = 0.8, vjust = 1.5))
 ```
+
 An extra layer with Geneva map is added on top of the location.
 
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
-weather <- c("Beau temps","chute de neige","Grêle","Pluie","Pluie givrante",
-      "Temps couvert")
+weather <- c("Beau temps","chute de neige","Grêle","Pluie","Pluie givrante","Temps couvert")
 
-accidents_filter <- accidents %>% 
-  filter (conditions_meteo %in%weather)
+accidents_filter_2018 <- accidents %>% 
+  filter (conditions_meteo %in%weather) %>% 
+  filter (year == "2018")
 
 autoplot.OpenStreetMap(map_latlon) +
   geom_point(
-    data = accidents_filter,
+    data = accidents_filter_2018,
     mapping = aes(x = lon_wgs, y = lat_wgs),
     alpha = 0.1,
     color = "dodgerblue4"
   ) +
-  facet_wrap(vars(conditions_meteo))+
+  facet_wrap(vars(conditions_meteo),ncol = 2)+
+  labs(
+    title = "Road accidents in Geneva",
+    subtitle = "Year 2018",
+    y = "Latitude",
+    x = "Longitude",
+    caption = "Source: SITG"
+  ) +
+  ylim(46.183158, 46.228066) +
+  xlim(6.107025, 6.195431)+
+   theme_void()+
+  theme(plot.title = element_text(size = 13,hjust = 0.05, vjust = 14))
+ 
+  
+```
+
+These set of maps show the location of road accidents in Geneva during the year 2018. But are there more accidents during a rainy day ? Surprisingly the data indicates that accidents are occurring during sunny days. 
+
+But let's look at the number of accidents per year by developing a set of maps that will display accidents by year since 2015.
+
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
+
+accidents_filter_aft2015 <- accidents %>% 
+  filter (conditions_meteo %in%weather) %>% 
+  filter (year >= 2015)
+
+autoplot.OpenStreetMap(map_latlon) +
+  geom_point(
+    data = accidents_filter_aft2015,
+    mapping = aes(x = lon_wgs, y = lat_wgs),
+    alpha = 0.1,
+    color = "dodgerblue4"
+  ) +
+  facet_wrap(vars(year),ncol = 2)+
   labs(
     title = "Road accidents in Geneva",
     y = "Latitude",
@@ -103,9 +142,8 @@ autoplot.OpenStreetMap(map_latlon) +
   ) +
   ylim(46.183158, 46.228066) +
   xlim(6.107025, 6.195431)+
-  theme_void()+
-    theme(plot.title = element_text(size = 14,hjust = 0.8, vjust = 1.5))
-  
+   theme_void()+
+  theme(plot.title = element_text(size = 13,hjust = 0.05, vjust = 1))
+
 ```
 
-This map shows the location of all car accidents in Geneva. But are there more accidents during a rainy day ? The answer is in the chart !
