@@ -34,6 +34,6 @@ a- Creation of maps showing the evolution of employment rates per country (with 
 
 a - Chart showing the number of calories by menu and restaurant or how to transform data from a rough table into a more insightful representation. 
 
-[4- Financial data](https://github.com/Selimach/visualization/tree/master/Financial)
+[4- Finance](https://github.com/Selimach/visualization/tree/master/Financial)
 
 a - High-frequency charts of daily SMI (Swiss Market Index), static and dynamic (in html).
