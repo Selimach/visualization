@@ -4,7 +4,6 @@ author: "Selim Ach"
 date: "18/10/2020"
 output: github_document
 always_allow_html: true
-
 ---
 
 Ce document est rédigé à des fins d'illustration et l'analyse se base sur des données publiques provenant de la RATP. L'analyse statistique est faite avec le logiciel de programmation R, et a pour but de donner un aperçu des différentes possibilités de traitement de données, de production d'indicateurs et autres graphiques.
@@ -55,7 +54,6 @@ pos_geo2 <- pos_geo %>%
 
 ### Statistiques descriptives générales
 #### Fréquentation 
-
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
 options(scipen = 1000)
@@ -67,7 +65,7 @@ trafic_annuel_reseau_2019 %>%
   ggplot(mapping = aes(x = Trafic, y = Station, fill= Réseau))+
   geom_col()+
   labs(
-    title = "Trafic entrant par station du réseau ferré - 2019",
+    title = "Trafic entrant par station - 2019",
     subtitle = "30 stations les plus utilisées",
     caption = "Source:RATP",
     x =  "Moyenne Trafic",
@@ -75,12 +73,12 @@ trafic_annuel_reseau_2019 %>%
     colour = "Réseau"
   ) +
   theme(legend.key.size = unit(0.5, "cm"))+
+  theme(axis.text.y  = element_text(hjust = 1, size = 6))+   
   scale_x_continuous(labels = unit_format(unit = "M", scale = 1e-6))
 
 ```
 
 #### Moyenne, fréquentation maximale et minimale
-
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
 basic_stat <- trafic_annuel_reseau_2019 %>% 
@@ -96,7 +94,6 @@ basic_stat
 ```
 
 ### Statistiques descriptives par ligne de métro et RER
-
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
 max_stat_RER <- trafic_annuel_reseau_2019 %>% 
@@ -139,14 +136,13 @@ trafic_annuel_reseau_2019_prop <- trafic_annuel_reseau_2019 %>%
 
 ggplot(trafic_annuel_reseau_2019_prop, aes(x = "", y = Proportion, fill = Réseau))+
   geom_bar(stat ="identity",width = 1)+
-  coord_polar(theta = "y") + geom_text(aes(label = round(Proportion,digits=2)), position = position_stack(vjust = 0.5))+
-  theme_minimal()+
-  labs(title = "Proportion Métro/RER", 
+  coord_polar(theta = "y") + geom_text(aes(label = round(Proportion,digits=1)), position = position_stack(vjust = 0.5))+
+  labs(title = "Proportion Métro et RER (%)", 
         subtitle = "Année 2019",
-       caption = "Source: RATP")
+       caption = "Source: RATP")+
+  theme_void()
 
 ```
-
 
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
@@ -160,18 +156,55 @@ coord_RER <-pos_geo2 %>%
   summarise(latt = mean(latt),
             long=mean(long))
 
-res_final<-trafic_annuel_reseau_2019_full_RER %>% 
-  head(4) %>% 
-  cbind(coord_RER)
+#res_final<-trafic_annuel_reseau_2019_full_RER %>% 
+#head(4) %>% 
+# cbind(coord_RER)
 
 #Displaying a map with names and a popup description
-res_final %>% 
-  leaflet() %>%
-  addTiles() %>% 
-  addMarkers(lng=~long,lat=~latt)
+#m <- res_final %>% 
+#leaflet() %>%
+#addTiles() %>% 
+#addMarkers(lng=~long,lat=~latt)
 
-         
 ```
+
+### Répartition des voyageurs sur les lignes principales et par ville (hors Paris) 
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
+
+trafic_annuel_reseau_2019_group <- trafic_annuel_reseau_2019 %>% 
+  group_by(Réseau,Ville) %>% 
+  summarise (Trafic_Total = sum(Trafic)) %>% 
+  arrange(desc(Trafic_Total)) %>%
+  filter (Ville !=  "Paris") %>% 
+  head (25)
+
+
+ggplot(data = trafic_annuel_reseau_2019_group,
+  mapping = aes(x = Ville,y = Trafic_Total, fill = Réseau))+
+  geom_col(color = "darkblue")+
+  facet_grid(vars(Réseau))+
+  labs(title = "Fréquentation par ville",
+       subtitle = "25 lignes principales hors Paris intra-muros (2019)",
+       x = "Station",
+       y = "Usagers",
+       caption = "Source: RATP")+
+  theme (axis.text.x=element_text(angle=90, hjust=1))+
+  theme(axis.text = element_text(size = 10))+   
+  theme(plot.title = element_text(size = 16,vjust = 1.5))+
+  theme(strip.text = element_text(size=10,vjust = 1))+
+  theme(axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0),vjust = 1.5))+
+  scale_y_continuous(labels = unit_format(unit = "M", scale = 1e-6))
+
+```
+
+
+
+
+
+
+
+
+
 
 
 

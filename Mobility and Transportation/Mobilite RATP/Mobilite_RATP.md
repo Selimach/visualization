@@ -250,12 +250,6 @@ NORD
 
 ![](Mobilite_RATP_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
-<!--html_preserve-->
+### Répartition des voyageurs sur les lignes principales et par ville (hors Paris)
 
-<div id="htmlwidget-1e6038637b4b468dbfcd" class="leaflet html-widget" style="width:672px;height:480px;">
-
-</div>
-
-<script type="application/json" data-for="htmlwidget-1e6038637b4b468dbfcd">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[[48.8576918345942,48.84368046702,48.8810816657367,48.89303960645],[2.34798963852442,2.3735398017355,2.357748079238,2.23749223664],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[48.84368046702,48.89303960645],"lng":[2.23749223664,2.3735398017355]}},"evals":[],"jsHooks":[]}</script>
-
-<!--/html_preserve-->
+![](Mobilite_RATP_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
