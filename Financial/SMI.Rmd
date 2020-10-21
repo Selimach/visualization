@@ -3,8 +3,8 @@ title: "SMI"
 author: "Selim Ach"
 date: "10/17/2020"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 The objective of this report is to provie an example of a high frequency chart with the possibility to change the scale at which information are displayed (change frequency and time frame), but also add specific information on the chart itself.
@@ -76,6 +76,26 @@ g2
 
 ```
 
+#### Adding an interactive map.
+
+```{r}
+
+library (plotly)
+
+
+ggplotly(
+  g2 = ggplot2::last_plot(),
+  width = NULL,
+  height = NULL,
+  tooltip = "all",
+  dynamicTicks = FALSE,
+  layerData = 1,
+  originalData = TRUE,
+  source = "A"
+)
+
+```
+
 #### Another interesting feature is to add another chart to zoom or to show the general trend of the time series.
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
@@ -104,7 +124,7 @@ g1_bis <- ggplot(
   mapping = aes(x = date,
     y = price)) +
   geom_line(color = "red")+
-  labs(title = "January 1, 2015 - April 29, 2020")+
+  labs(title = "from Jan 2015 to Apr 2020")+
   theme_economist()+
   theme(plot.title = element_text(size = 12,vjust = 1.5))+
   theme(axis.text.x = element_text(size = 5))+
