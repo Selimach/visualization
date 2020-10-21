@@ -1,0 +1,175 @@
+---
+title: "Mobilite_RATP"
+author: "Selim Ach"
+date: "18/10/2020"
+output:
+  
+  pdf_document: default
+  html_document: default
+---
+Ce document est rédigé à des fins d'illustration et l'analyse se base sur des données publiques provenant de la RATP. L'analyse statistique est faite avec le logiciel de programmation R, et a pour but de donner un aperçu des différentes possibilités de traitement de données, de production d'indicateurs et autres graphiques.
+
+----------
+
+Source - https://dataratp2.opendatasoft.com/explore/?sort=modified 
+
+Ce jeu de données détaille le trafic des entrants directs sur le réseau ferré RATP en 2019.
+
+Les « entrants directs » sont exclusivement les voyageurs provenant de la voie publique ou du réseau SNCF entrant sur le réseau de transport RATP en validant un titre de transport valide.
+
+Les voyageurs en correspondance (y compris correspondances métro/RER) sur le réseau RATP ne sont pas comptabilisés.
+
+
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
+
+library(readr)
+library(ggplot2)
+library(leaflet)
+library(ggmap)
+library(formattable)
+library(tidyverse)
+library(data.table)
+library(tidyr)
+library(kableExtra)
+library(tinytex)
+library(scales)
+library(dplyr)
+library(stringr)
+library(fuzzyjoin)
+library(ggthemes)
+
+# Chargement du fichier 
+
+trafic_annuel_reseau_2019 <- read_delim("Data/trafic_annuel_reseau_2019.csv", 
+    ";", escape_double = FALSE)
+
+pos_geo <- read_delim("Data/pos_geo.csv", 
+    ";", escape_double = FALSE)
+
+pos_geo2 <- pos_geo %>% 
+  separate(Coordinates,c("latt","long"),sep = ",") %>% 
+    mutate(latt = as.numeric (latt)) %>%
+    mutate(long = as.numeric (long))
+
+```
+
+### Statistiques descriptives générales
+#### Fréquentation 
+
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
+
+options(scipen = 1000)
+
+trafic_annuel_reseau_2019 %>%
+  group_by(Réseau) %>% 
+  arrange(desc(Trafic)) %>% 
+  head(30) %>% 
+  ggplot(mapping = aes(x = Trafic, y = Station, fill= Réseau))+
+  geom_col()+
+  labs(
+    title = "Trafic entrant par station du réseau ferré - 2019",
+    subtitle = "30 stations les plus utilisées",
+    caption = "Source:RATP",
+    x =  "Moyenne Trafic",
+    y = "Station",
+    colour = "Réseau"
+  ) +
+  theme(legend.key.size = unit(0.5, "cm"))+
+  scale_x_continuous(labels = unit_format(unit = "M", scale = 1e-6))
+
+```
+
+#### Moyenne, fréquentation maximale et minimale
+
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
+
+basic_stat <- trafic_annuel_reseau_2019 %>% 
+  group_by(Réseau) %>% 
+  summarize(Moyenne = mean(Trafic),
+            Max = max(Trafic),
+            Min = min(Trafic)) %>% 
+            kable(format.args = list(big.mark = ",")) %>% 
+            kable_styling()
+  
+basic_stat
+
+```
+
+### Statistiques descriptives par ligne de métro et RER
+
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
+
+max_stat_RER <- trafic_annuel_reseau_2019 %>% 
+  filter (Réseau == "RER") %>%
+  filter (Trafic== max(Trafic)) %>% 
+  select (Réseau,Station,Trafic) %>% 
+  kable(format.args = list(big.mark = ",")) %>%
+  kable_styling()
+
+max_stat_metro <- trafic_annuel_reseau_2019 %>% 
+  filter (Réseau == "Métro") %>%
+  filter (Trafic== max(Trafic)) %>% 
+  select (Réseau,Station,Trafic) %>% 
+  kable(format.args = list(big.mark = ",")) %>% 
+  kable_styling()
+
+```
+
+#### Pic voyageurs - RER
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
+
+max_stat_RER
+
+```
+
+#### Pic voyageurs - Métro
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
+
+max_stat_metro
+
+```
+
+### Répartition des voyageurs RER et Métro 
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
+
+trafic_annuel_reseau_2019_prop <- trafic_annuel_reseau_2019 %>% 
+  group_by(Réseau) %>% 
+  summarise(total_c = sum(Trafic)) %>% 
+  mutate(Proportion = prop.table(total_c)*100)
+
+ggplot(trafic_annuel_reseau_2019_prop, aes(x = "", y = Proportion, fill = Réseau))+
+  geom_bar(stat ="identity",width = 1)+
+  coord_polar(theta = "y") + geom_text(aes(label = round(Proportion,digits=2)), position = position_stack(vjust = 0.5))+
+  theme_minimal()+
+  labs(title = "Proportion Métro/RER", 
+        subtitle = "Année 2019",
+       caption = "Source: RATP")
+
+```
+
+
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
+
+trafic_annuel_reseau_2019_full_RER <- trafic_annuel_reseau_2019 %>%
+  filter (Réseau =="RER") %>% 
+  arrange(desc(Trafic))
+
+coord_RER <-pos_geo2 %>% 
+  filter(Name == "GARE DU NORD" | Name == "GARE DE LYON"| Name == "LA DEFENSE" | Name == "CHATELET") %>%
+  group_by(Name) %>% 
+  summarise(latt = mean(latt),
+            long=mean(long))
+
+res_final<-trafic_annuel_reseau_2019_full_RER %>% 
+  head(4) %>% 
+  cbind(coord_RER)
+
+# Displaying a map with names and a popup description
+#res_final %>% 
+#leaflet() %>%
+#addTiles() %>% 
+#addMarkers(lng=~long,lat=~latt)
+              
+```
+
+
