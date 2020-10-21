@@ -2,11 +2,11 @@
 title: "Mobilite_RATP"
 author: "Selim Ach"
 date: "18/10/2020"
-output:
-  
-  pdf_document: default
-  html_document: default
+output: github_document
+always_allow_html: true
+
 ---
+
 Ce document est rédigé à des fins d'illustration et l'analyse se base sur des données publiques provenant de la RATP. L'analyse statistique est faite avec le logiciel de programmation R, et a pour but de donner un aperçu des différentes possibilités de traitement de données, de production d'indicateurs et autres graphiques.
 
 ----------
@@ -164,12 +164,14 @@ res_final<-trafic_annuel_reseau_2019_full_RER %>%
   head(4) %>% 
   cbind(coord_RER)
 
-# Displaying a map with names and a popup description
-#res_final %>% 
-#leaflet() %>%
-#addTiles() %>% 
-#addMarkers(lng=~long,lat=~latt)
-              
+#Displaying a map with names and a popup description
+res_final %>% 
+  leaflet() %>%
+  addTiles() %>% 
+  addMarkers(lng=~long,lat=~latt)
+
+         
 ```
+
 
 
