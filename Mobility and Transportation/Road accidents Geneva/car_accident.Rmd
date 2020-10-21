@@ -2,7 +2,7 @@
 title: "Road accidents"
 author: "Selim Ach"
 date: "10/15/2020"
-output: github_document
+output: pdf_document
 ---
 
 The data that is analyzed in this report is related to road accidents occurring in Geneva. These type of data are usually presented in a table, but there are better ways, such as using maps.
