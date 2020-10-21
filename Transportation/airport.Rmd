@@ -2,11 +2,8 @@
 title: "Airport"
 author: "Selim Ach"
 date: "10/2/2020"
-output:
-  pdf_document: default
-  html_document: default
-editor_options:
-  chunk_output_type: console
+output: github_document
+ 
 ---
 
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
