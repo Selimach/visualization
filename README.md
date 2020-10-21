@@ -8,7 +8,7 @@
 
 --------------------------------------------------
 
-[Transportation](https://github.com/Selimach/visualization/tree/master/Transportation)
+[1-Mobility and Transportation](https://github.com/Selimach/visualization/tree/master/Transportation)
 #### Urban transport
 a - Descriptive statistics of the french urban transport network, based on a set of data available online (source: RATP).  This type of reports can be automatically generated and updated for example each month.
 
@@ -23,11 +23,11 @@ b - Creation of a complex multiple charts showing the number of daily flights by
 
 c - Creation of various charts to benchmark airlines on various routes.
 
-#### 2 - Socio-economic
+[2- Socio-economic](https://github.com/Selimach/visualization/tree/master/Socio-economic) 
 a- Creation of maps showing the evolution of employment rates per country (with the possibility to highlight only few countries ) based on data sourced from Eurostat. Information can be also shown on a map, for a particular year, or for several years to show trends.
 
-#### 3 - Consumer goods
+[3- Consumer goods](https://github.com/Selimach/visualization/tree/master/Consumer%20goods)
 a - Chart showing the number of calories by menu and restaurant or how to transform data from a rough table into a more insightful representation. 
 
-#### 3 - Financial
+[4- Financial data](https://github.com/Selimach/visualization/tree/master/Financial)
 a - High-frequency charts of daily SMI (Swiss Market Index), static and dynamic (in html).
