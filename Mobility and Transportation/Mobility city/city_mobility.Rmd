@@ -2,9 +2,7 @@
 title: "Mobility Index"
 author: "Selim Ach"
 date: "15/10/2020"
-output:
-  pdf_document: default
-  html_document: default
+output: github_document
 ---
 
 This graph indicates the evolution of the mobility index in major European cities based on data collected by "Citymapper". 
