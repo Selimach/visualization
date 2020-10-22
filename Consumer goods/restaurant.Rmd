@@ -2,9 +2,8 @@
 title: "Restaurant"
 author: "Selim Ach"
 date: "10/5/2020"
-output:
-  pdf_document: default
-  html_document: default
+output: pdf_document
+ 
 ---
 
 Very often data are presented in tabular format and the challenge is to be able to process information in order to provide relevant insights. 
