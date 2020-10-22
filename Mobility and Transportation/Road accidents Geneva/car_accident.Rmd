@@ -2,10 +2,14 @@
 title: "Road accidents"
 author: "Selim Ach"
 date: "10/15/2020"
-output: pdf_document
+output:
+  html_document:
+    df_print: paged
 ---
 
 The data that is analyzed in this report is related to road accidents occurring in Geneva. These type of data are usually presented in a table, but there are better ways, such as using maps.
+
+Let's first look at the overall data with a first overview of the number of accidents by day and year.
 
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
@@ -25,6 +29,40 @@ accidents <- accidents %>%
   mutate (date = ymd(date)) %>% 
   mutate (year = year(date))
 
+accidents <- accidents  %>% 
+    mutate(jour = factor(jour, levels = c('Lundi', 
+
+                             'Mardi', 
+
+                             'Mercredi', 
+
+                             'Jeudi', 
+
+                             'Vendredi', 
+
+                             'Samedi', 
+
+                             'Dimanche')))
+
+
+accidents %>%
+  count(jour, annee) %>%
+  ggplot(aes(x = jour, y = n)) +
+  geom_col(alpha = 0.7, fill = "navyblue") +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  facet_wrap(vars(annee)) +
+  theme(axis.text.x = element_text(angle = 90)) +
+  labs(
+    x = "",
+    y = "Nombre d'accident"
+  )
+
+```
+
+
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
+
 accidents_extr <- accidents %>% 
   head(15) %>% 
   select(date,groupe_accident,commune,conditions_meteo)
@@ -32,6 +70,8 @@ accidents_extr <- accidents %>%
 knitr::kable(accidents_extr, caption = "Extract of the information on road accidents in Geneva")
 
 ```
+
+***
 
 Since the information on longitude and latitude is available, it is possible to plot on a graph the exact location of each accident. 
 
