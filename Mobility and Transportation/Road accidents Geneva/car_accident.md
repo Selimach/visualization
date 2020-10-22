@@ -7,6 +7,11 @@ The data that is analyzed in this report is related to road accidents
 occurring in Geneva. These type of data are usually presented in a
 table, but there are better ways, such as using maps.
 
+Let’s first look at the overall data with a first overview of the number
+of accidents by day and year.
+
+![](car_accident_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
+
 <table>
 
 <caption>
@@ -473,16 +478,18 @@ Beau temps
 
 </table>
 
+-----
+
 Since the information on longitude and latitude is available, it is
 possible to plot on a graph the exact location of each accident.
 
-![](car_accident_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
-
 ![](car_accident_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+
+![](car_accident_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
 An extra layer with Geneva map is added on top of the location.
 
-![](car_accident_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](car_accident_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 These set of maps show the location of road accidents in Geneva during
 the year 2018. But are there more accidents during a rainy day ?
@@ -492,4 +499,4 @@ sunny days.
 But let’s look at the number of accidents per year by developing a set
 of maps that will display accidents by year since 2015.
 
-![](car_accident_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](car_accident_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
