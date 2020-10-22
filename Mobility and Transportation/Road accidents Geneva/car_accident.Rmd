@@ -2,9 +2,7 @@
 title: "Road accidents"
 author: "Selim Ach"
 date: "10/15/2020"
-output:
-  html_document:
-    df_print: paged
+output: github_document
 ---
 
 The data that is analyzed in this report is related to road accidents occurring in Geneva. These type of data are usually presented in a table, but there are better ways, such as using maps.
@@ -45,7 +43,7 @@ accidents <- accidents  %>%
                              'Dimanche')))
 
 
-accidents %>%
+p <- accidents %>%
   count(jour, annee) %>%
   ggplot(aes(x = jour, y = n)) +
   geom_col(alpha = 0.7, fill = "navyblue") +
@@ -55,8 +53,10 @@ accidents %>%
   theme(axis.text.x = element_text(angle = 90)) +
   labs(
     x = "",
-    y = "Nombre d'accident"
+    y = "Number of accidents"
   )
+
+p
 
 ```
 
