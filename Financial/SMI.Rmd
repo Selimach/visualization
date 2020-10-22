@@ -2,10 +2,14 @@
 title: "SMI"
 author: "Selim Ach"
 date: "10/17/2020"
-output: pdf_document
+output: github_document
 ---
 
-The objective of this report is to provie an example of a high frequency chart with the possibility to change the scale at which information are displayed (change frequency and time frame), but also add specific information on the chart itself.
+The objective of this report is to provide an example of a high frequency charts with the possibility to change the scale at which information are displayed (change frequency and time frame), but also add specific information on the chart itself. These types of charts can be fully customized depending on the business needs. 
+
+More to come soon with dynamic charts and dashboards.
+
+***
 
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
@@ -102,7 +106,7 @@ g1_bis <- ggplot(
   mapping = aes(x = date,
     y = price)) +
   geom_line(color = "red")+
-  labs(title = "from Jan 2015 to Apr 2020")+
+  labs(title = "Jan 2015 to Apr 2020")+
   theme_economist()+
   theme(plot.title = element_text(size = 12,vjust = 1.5))+
   theme(axis.text.x = element_text(size = 5))+
