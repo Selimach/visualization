@@ -2,7 +2,7 @@
 title: "Restaurant"
 author: "Selim Ach"
 date: "10/5/2020"
-output: pdf_document
+output: github_document
  
 ---
 
@@ -65,7 +65,6 @@ food_data %>%
           legend.direction = "horizontal")
 
 ```
-
 
 In addition to the level of calories per menu, this chart allows also to display the level of sodium.
 
