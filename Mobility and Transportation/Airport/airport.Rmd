@@ -52,19 +52,27 @@ theme(axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0)))
 
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
+library(stringr)
+
 airport_traffic_country <- airport_traffic %>% 
   filter(flt_date >= as.Date("2019-01-01")) %>% 
   group_by(state_name,flt_date) %>% 
   summarise(total_flight = sum(flt_tot_1)) %>% 
   arrange(flt_date)
 
+airport_traffic_country <- airport_traffic_country %>% 
+  mutate(state_name = replace(state_name, state_name == "Bosnia and Herzegovina","Bosnia & Herzeg." )) %>% 
+   mutate(state_name = replace(state_name, state_name == "Republic of North Macedonia	","Rep. North Macedonia" )) %>% 
+mutate(state_name = replace(state_name, state_name == "United Kingdom","UK" )) %>% 
+  mutate(state_name = replace(state_name, state_name == "North Macedonia	","N. Macedonia" ))
+  
+
 ggplot(data = airport_traffic_country,
   mapping = aes(x = flt_date,y = total_flight,group=state_name,position="dodge")) +
   geom_line(color = "darkblue")+
   facet_wrap(vars(state_name),scales="free_y",) +
   geom_smooth(method = "loess",color = "red")+
-  labs(title = "Daily traffic by state
-       ",
+  labs(title = "Daily traffic by state",
        x = "Date",
        y = "Number of flights",
        caption = "Source: Eurocontrol")+
@@ -72,7 +80,7 @@ ggplot(data = airport_traffic_country,
   theme (axis.text.x=element_text(angle=90, hjust=1))+
   theme(axis.text = element_text(size = 6))+   
   theme(plot.title = element_text(size = 20))+
-  theme(strip.text = element_text(size=7))+
+  theme(strip.text = element_text(size=6))+
   theme(axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0)))
 
 ```
