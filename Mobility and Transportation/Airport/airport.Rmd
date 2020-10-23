@@ -2,7 +2,7 @@
 title: "Airport"
 author: "Selim Ach"
 date: "10/2/2020"
-output: github_document
+output: pdf_document
  
 ---
 
@@ -62,9 +62,9 @@ airport_traffic_country <- airport_traffic %>%
 
 airport_traffic_country <- airport_traffic_country %>% 
   mutate(state_name = replace(state_name, state_name == "Bosnia and Herzegovina","Bosnia & Herzeg." )) %>% 
-   mutate(state_name = replace(state_name, state_name == "Republic of North Macedonia	","Rep. North Macedonia" )) %>% 
+   mutate(state_name = replace(state_name, state_name == "Republic of North Macedonia","Rep. North Macedonia" )) %>% 
 mutate(state_name = replace(state_name, state_name == "United Kingdom","UK" )) %>% 
-  mutate(state_name = replace(state_name, state_name == "North Macedonia	","N. Macedonia" ))
+  mutate(state_name = replace(state_name, state_name == "North Macedonia","N. Macedonia" ))
   
 
 ggplot(data = airport_traffic_country,
