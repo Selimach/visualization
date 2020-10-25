@@ -1,0 +1,79 @@
+---
+title: "Swiss data - Population and GDP per Canton"
+author: "Selim Ach"
+date: "24/10/2020"
+output: github_document
+---
+
+In this report, we are presenting few cases where maps can be used effectively to present economic data.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, echo = FALSE, warning = FALSE)
+```
+
+```{r, warning = FALSE}
+
+library(tidyverse)
+library(sf)
+library(janitor)
+library(readxl)
+library(cartogram)
+
+options(scipen = 1000)
+
+swiss <- st_read("Data/g1g09_shp_090626/G1K09.shp",
+  options = "ENCODING=Latin1")
+
+swisspop <- read_excel("Data/swiss_pop_2018.xlsx")
+
+swiss <- swiss %>%
+  left_join(swisspop, c("KURZ" = "code")) %>%
+  rename("population" = "Total")
+
+```
+
+### First map using several shades of blue
+
+```{r}
+
+ggplot() +
+  geom_sf(
+    data = swiss,
+    mapping = aes(fill = population)) +
+  theme_void() +
+  labs(title = "Population in Switzerland (2018)",
+       caption = "Source: OFS",
+       fill= "")+
+  theme(plot.title = element_text(size = 12,hjust = 0.2,vjust = 1.5))+
+  scale_fill_continuous(labels=function(x) format(x, big.mark = ",", scientific = FALSE))
+  
+```
+
+### Another example of map using the viridis scale
+
+```{r}
+
+swiss_carto <- cartogram_cont(swiss, weight = "population", itermax = 2)
+
+ggplot() +
+  geom_sf(
+    data = swiss_carto,
+    mapping = aes(fill = population)
+  ) +
+  theme_void() +
+  theme(legend.position = "bottom") +
+  scale_fill_viridis_c(labels=function(x) format(x, big.mark = ",", scientific = FALSE)) +
+  labs(title = "Population in Switzerland (2018)",
+       fill= "",
+       caption = "Source: OFS")+
+  theme(plot.title = element_text(size = 12,hjust = 0.2,vjust = 1.5))+
+  theme(legend.text= element_text(angle = 45, vjust = 1, hjust=0.8))
+  
+```
+
+### Average revenue per canton
+
+```{r}
+
+```
+
