@@ -28,7 +28,7 @@ c - Creation of various charts to benchmark airlines on various routes.
 
 [2- Socio-economic](https://github.com/Selimach/visualization/tree/master/Socio-economic)
 
-a- Creation of maps showing the evolution of employment rates per country (with the possibility to highlight only few countries ) based on data sourced from Eurostat. Information can be also shown on a map, for a particular year, or for several years to show trends.
+Creation of several maps showing economic data (e.g. employment rates per country in Europe, Swiss population and GDP per canton). 
 
 [3- Consumer goods](https://github.com/Selimach/visualization/tree/master/Consumer%20goods)
 
