@@ -22,6 +22,6 @@ effectively to present economic data.
 
 ![](Swiss-eco_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
-### COmbining information on population and GDP
+### Combining information on population and GDP
 
 ![](Swiss-eco_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->

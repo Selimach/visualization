@@ -72,7 +72,7 @@ ggplot() +
   
 ```
 
-### COmbining information on population and GDP
+### Combining information on population and GDP
 
 ```{r}
 
@@ -132,8 +132,6 @@ q <- ggplot() +
        caption = "Source:OFS")+
   theme(plot.title = element_text(size = 12,hjust = 0.2,vjust = 1.5))+
   theme(legend.text= element_text(angle = 45, vjust = 1, hjust=0.8))
-
-
 
 p + q
 
