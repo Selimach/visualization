@@ -18,6 +18,7 @@ library(sf)
 library(janitor)
 library(readxl)
 library(cartogram)
+library(dplyr)
 
 options(scipen = 1000)
 
@@ -71,9 +72,70 @@ ggplot() +
   
 ```
 
-### Average revenue per canton
+### COmbining information on population and GDP
 
 ```{r}
+
+library(readxl)
+
+PIB <- read_excel("Data/PIB.xlsx", 
+    sheet = "PIB par canton", col_types = c("text", "text", 
+        "numeric", "numeric", "numeric", 
+        "numeric", "numeric", "numeric", 
+        "numeric", "numeric", "numeric", 
+        "numeric"), skip = 2, n_max = 27) %>% 
+  select(!Canton)
+
+PIB <- PIB[-c(1),]
+
+PIB <- PIB %>%
+  pivot_longer(!Code, names_to = "year", values_to = "PIB")
+
+PIB_2017 <- PIB %>% 
+  filter(year == "2017p")
+
+swiss_carto_2 <- swiss_carto %>% 
+  left_join(PIB_2017, by = c("KURZ" = "Code"))
+
+
+```
+
+
+```{r}
+
+library(patchwork)
+
+p <- ggplot() +
+  geom_sf(
+    data = swiss_carto,
+    mapping = aes(fill = population)
+  ) +
+  theme_void() +
+  theme(legend.position = "bottom") +
+  scale_fill_viridis_c(labels=function(x) format(x, big.mark = ",", scientific = FALSE)) +
+  labs(title = "Population",
+       fill= "")+
+  theme(plot.title = element_text(size = 12,hjust = 0.2,vjust = 1.5))+
+  theme(legend.text= element_text(angle = 45, vjust = 1, hjust=0.8))
+
+
+q <- ggplot() +
+  geom_sf(
+    data = swiss_carto_2,
+    mapping = aes(fill = PIB)
+  ) +
+  theme_void() +
+  scale_fill_continuous(labels=function(x) format(x, big.mark = ",", scientific = FALSE))+
+  theme(legend.position = "bottom") +
+  labs(title = "GDP",
+       fill= "",
+       caption = "Source:OFS")+
+  theme(plot.title = element_text(size = 12,hjust = 0.2,vjust = 1.5))+
+  theme(legend.text= element_text(angle = 45, vjust = 1, hjust=0.8))
+
+
+
+p + q
 
 ```
 
