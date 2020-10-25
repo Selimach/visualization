@@ -7,7 +7,7 @@ In this report, we are presenting few cases where maps can be used
 effectively to present economic data.
 
     ## options:        ENCODING=Latin1 
-    ## Reading layer `G1K09' from data source `/Users/selim/Documents/datascience/visualization/Socio-economic/Data/g1g09_shp_090626/G1K09.shp' using driver `ESRI Shapefile'
+    ## Reading layer `G1K09' from data source `/Users/selim/Documents/datascience/visualization/Socio-economic/Swiss data/Data/g1g09_shp_090626/G1K09.shp' using driver `ESRI Shapefile'
     ## Simple feature collection with 26 features and 3 fields
     ## geometry type:  MULTIPOLYGON
     ## dimension:      XY
@@ -22,4 +22,6 @@ effectively to present economic data.
 
 ![](Swiss-eco_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
-### Average revenue per canton
+### Combining information on population and GDP
+
+![](Swiss-eco_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
