@@ -34,7 +34,7 @@ ggplot(food_data, aes(x = restaurant, y = calories, colour = restaurant)) +
     legend.text=element_blank())+
   labs(title = "Calories in Food Menus ",
     subtitle = "Fast food restaurants",
-    x="Restaurant", y="Calories")+
+    x="Restaurant", y="Calories - kcals")+
   theme(plot.title = element_text(size = 14,vjust = 1.5))
 ```
 
@@ -57,6 +57,7 @@ food_data %>%
   theme(legend.position="top") +
     labs(title = "Calories in Food Menus ",
     subtitle = "Level of sodium (mg) in each menu",
+    fill = "Sodium",
     x="Restaurant", y="Calories - kcals")+
   theme(plot.title = element_text(hjust = 0,vjust = 1.5))+
   theme(axis.text.x = element_text(angle = 90, hjust = 1.1,vjust = 0.9))+
