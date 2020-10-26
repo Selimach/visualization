@@ -41,14 +41,14 @@ information.
 ![](restaurant_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
 
 This chart is an overview of the fast food restaurants and associated
-menus with an indication of their level of calories. The possobilities
+menus with an indication of their level of calories. The possibilities
 to plot each menu (a dot by menu) is an interesting fearture to grasp an
 ideal of the number of menus offered by each restaurant.
 
 ![](restaurant_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
 In addition to the level of calories per menu, this chart allows also to
-display an extra dimension, here it is the level of sodium. In this way,
-it is possible to offer a complete overview, within a single graph of
-the range of calories by menu (and by restaurant) as well as its
-associated level of sodium.
+display an extra dimension, here it is the level of sodium and the shape
+of the distribution. In this way, it is possible to offer a complete
+overview, within a single graph of the range of calories by menu (and by
+restaurant) as well as its associated level of sodium.
