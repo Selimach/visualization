@@ -10,7 +10,7 @@ It is also sometimes useful to display all the data sample, for a first
 visual inspection (e.g. identify potential outliers) and take a decision
 on how to narrow the sample to the variables of interest.
 
-Hereadfter is an example of how data can be presented to have a first
+Hereafter is an example of how data can be presented to have a first
 glance at the information and another chart with an additional layer of
 information.
 
@@ -42,7 +42,7 @@ information.
 
 This chart is an overview of the fast food restaurants and associated
 menus with an indication of their level of calories. The possibilities
-to plot each menu (a dot by menu) is an interesting fearture to grasp an
+to plot each menu (a dot by menu) is an interesting feature to grasp an
 ideal of the number of menus offered by each restaurant.
 
 ![](restaurant_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
@@ -52,3 +52,12 @@ display an extra dimension, here it is the level of sodium and the shape
 of the distribution. In this way, it is possible to offer a complete
 overview, within a single graph of the range of calories by menu (and by
 restaurant) as well as its associated level of sodium.
+
+-----
+
+Another interesting possibility is to create a chart that will
+facilitate the comparisons between restaurants in terms of average
+calories served per menu. The chart below is an example of such
+visualization using treemap.
+
+![](restaurant_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
