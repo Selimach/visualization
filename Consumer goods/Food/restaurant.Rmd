@@ -82,16 +82,15 @@ food_data2 <- food_data %>%
   group_by(restaurant) %>% 
   summarise (calories_T = sum(calories),
              calories_mean = mean(calories))
-  
 
 ggplot(food_data2, aes(area = calories_mean, label = round(calories_mean, digits = 0), fill = restaurant))+
   geom_treemap(start = "topleft")+
-  scale_fill_viridis_d( direction = -1) +
+  scale_fill_viridis_d(direction = 1) +
   geom_treemap_text(fontface = "italic", colour = "white", grow = FALSE,start = "topleft")+
   labs(title = "Fast food restaurants",
-       subtitle = "Average calories per menu")+
-  theme(plot.title = ggtext::element_markdown(),
-        legend.title = element_blank())
+       subtitle = "Average calories per menu",
+       fill = "Restaurant")+
+  theme(plot.title = ggtext::element_markdown())
 
 ```
 
