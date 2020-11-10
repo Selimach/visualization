@@ -50,7 +50,7 @@ g1 <- ggplot(
        caption = "SMI")+
   theme_economist()+
   theme(plot.title = element_text(size = 14,vjust = 1.5))+
-  scale_y_continuous(labels=function(x) format(x, big.mark = ".", decimal.mark = ",", scientific = FALSE))
+  scale_y_continuous(labels=function(x) format(x, big.mark = "'", decimal.mark = ",", scientific = FALSE))
 
 g1
 
@@ -72,7 +72,7 @@ g2 <- ggplot(data = data_smi_extr_2015_2019,mapping = aes(x = date,y = price)) +
        caption = "SMI")+
   theme_economist()+
   theme(plot.title = element_text(size = 14,vjust = 1.5))+
-  scale_y_continuous(labels=function(x) format(x, big.mark = ".", decimal.mark = ",", scientific = FALSE))
+  scale_y_continuous(labels=function(x) format(x, big.mark = "'", decimal.mark = ",", scientific = FALSE))
 
 g2
 
@@ -99,7 +99,7 @@ g3 <- ggplot(
        caption = "SMI")+
   theme_economist()+
   theme(plot.title = element_text(size = 14,vjust = 1.5))+
-  scale_y_continuous(labels=function(x) format(x, big.mark = ".", decimal.mark = ",", scientific = FALSE))
+  scale_y_continuous(labels=function(x) format(x, big.mark = "'", decimal.mark = ",", scientific = FALSE))
 
 g1_bis <- ggplot(
   data = data_smi_extr_2015_2019,
@@ -114,7 +114,7 @@ g1_bis <- ggplot(
   theme(axis.title.x = element_blank())+
   theme(axis.title.y = element_blank())+
   theme(plot.title = element_text(size = 10))+
-  scale_y_continuous(labels=function(x) format(x, big.mark = ".", decimal.mark = ",", scientific = FALSE))
+  scale_y_continuous(labels=function(x) format(x, big.mark = "'", decimal.mark = ",", scientific = FALSE))
 
 layout <- c(
   area(
@@ -136,8 +136,56 @@ g3 + g1_bis +
 
 ```
 
+***
 
+In the next chart, simple forecast models are implemented to predict the values of the SMI, taking into account pre-covid period. Three models are presented here. The first one is a naive prediction, which consist of using the last value of the time series to predict the future. The second model, drift, consist of drawing a line between the first and the last observation to extrapolate future values.  The last is simply a model a mean of the time series. 
 
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
+# Ref: Forecasting: Principles and Practice, 
+# Rob J Hyndman and George Athanasopoulos 
+# Monash University, Australia 
+# Link: https://otexts.com/fpp3
+
+library (fabletools)
+library (feasts)
+library(forecast)
+library(tsibble)
+library(janitor)
+library(forecast)
+
+data_smi2 <- data_smi %>%
+  mutate(day = row_number()) %>%
+  as_tsibble(index = day)
+
+data_smi_pre_covid <- data_smi %>%
+  filter (yearmonth(date) < yearmonth("2020-02-01")) %>% 
+  mutate(day = row_number()) %>%
+  as_tsibble(index = day)
+
+data_smi2_fit <- data_smi_pre_covid %>%
+  model(Mean = fable::MEAN(price),
+        Naive = fable::NAIVE(price),
+        Drift = fable::RW(price ~ drift()))
+
+data_smi_fct <- data_smi2_fit %>%
+  forecast(h=250)
+
+anchor <- data_smi2 %>%
+  filter(yearmonth(date) == yearmonth("2020-02-01"))
+
+data_smi_fct %>%
+  autoplot(data_smi2,level = NULL) +
+  autolayer(data_smi_pre_covid, price, color = "blue") +
+  autolayer(anchor, price) +
+  ggtitle("Daily SMI and Projection") +
+  xlab("Days") + ylab("Price in CHF") +
+  guides(colour = guide_legend(title = "Forecast"))+
+  scale_y_continuous(labels=function(x) format(x, big.mark = "'", decimal.mark = ",", scientific = FALSE))+
+  theme(plot.title = element_text(size = 12,vjust = 1.5))+
+  theme_economist()+
+  theme(legend.position= "bottom")
+
+```
 
 
