@@ -36,4 +36,9 @@ a - Chart showing the number of calories by menu and restaurant or how to transf
 
 [4- Finance](https://github.com/Selimach/visualization/tree/master/Financial)
 
-a - High-frequency charts of daily SMI (Swiss Market Index), with the possibility of combining several charts.
+a - High-frequency charts of daily SMI (Swiss Market Index), with the possibility of combining several charts. The second part is an attempt to run some predictions. For those interested by time series and forecasting, I can recommand [Forecasting: Principles and Practice](https://otexts.com/fpp3) by Rob J Hyndman and George Athanasopoulos
+
+
+
+
+
