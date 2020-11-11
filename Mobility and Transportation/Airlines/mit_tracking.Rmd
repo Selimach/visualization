@@ -1,0 +1,208 @@
+---
+title: "Airline performance"
+author: "Selim Ach"
+date: "10/13/2020"
+output: github_document
+---
+
+The objective of this report is to provide some illustrations on how to benchmark airlines performance (cargo) using different set of indicators. This is particular relevant to effectively visualizing pricing and commercial positioning. 
+
+****
+
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
+
+library(readxl)
+library(tidyverse)
+library(janitor)
+library (ggplot2)
+library(ggthemes)
+
+peer_report <- read_excel("Data/Peer Report.xlsx", 
+    col_types = c("text", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "numeric", "numeric", "numeric", 
+        "numeric", "numeric", "numeric"))
+
+# Create OD
+peer_report <- peer_report %>% 
+  clean_names() %>% 
+  mutate (OD = str_c(airport_1,airport_2,sep = "-"))
+
+# Calculation of the most frequent OD
+top15 <- peer_report %>% 
+  group_by(OD) %>% 
+  count() %>% 
+  arrange(-n) %>% 
+  head (15) %>% 
+  pull(OD)
+
+peer_report_grouped_15 <- peer_report %>% 
+  filter (OD %in% top15) %>% 
+  filter(! players == "MARKET") %>%  # removing market from the dataset
+  group_by(OD,players) %>% 
+  summarise (avge_weight = mean(weight),
+             avge_yield = mean(yield),
+             avge_share = mean(share))
+
+```
+
+## Average yield by carrier type (for the top 15 O-D)
+
+The first figure is an example of a multiple bar chart that will show how an airline of reference is performing against direct competitors. Indeed, in a competitive environment, what is more relevant is sometimes the behavior of the direct competitor of similar size compared to the overall average. The chart below indicate the positioning of the carrier of reference MI (123) versus Peers.
+
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
+
+## Yield
+
+ggplot(data = peer_report_grouped_15,
+  mapping = aes(x = players, y = avge_yield, group=OD, fill=players)) +
+  geom_col(color = "darkblue")+
+  facet_wrap(vars(OD),scales="free_y",) +
+  labs(title = "Average Yield by Origin - Destination",
+       subtitle = "Top 15 Origin - Destination",
+       x = "Carrier",
+       y = "Average Yield",
+       caption = "Source: Mit")+
+  theme_economist()+
+  theme (axis.text.x=element_text(angle=90, hjust=1))+
+  theme(axis.text = element_text(size = 8))+   
+  theme(plot.title = element_text(size = 20,vjust = 1.5))+
+  theme(strip.text = element_text(size=7))+
+  theme(axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0)))+
+  theme(legend.position = "none")+
+  theme(axis.title.x = element_text(margin = margin(t = 10, r = 15, b = 0, l = 0)))
+ 
+
+```
+
+## Average weight by carrier type (for the top 15 O-D)
+
+This is a similar figure, using a different KPI (here the average weight offered).
+
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
+
+## Weight
+
+ggplot(data = peer_report_grouped_15,
+  mapping = aes(x = players, y = avge_weight, group=OD, fill=players)) +
+  geom_col(color = "darkblue")+
+  facet_wrap(vars(OD),scales="free_y",) +
+  labs(title = "Average Weight by Origin - Destination",
+       subtitle = "Top 15 Origin - Destination",
+       x = "Carrier",
+       y = "Average Weight",
+       caption = "Source: Mit")+
+  theme_economist()+
+  theme (axis.text.x=element_text(angle=90, hjust=1))+
+  theme(axis.text = element_text(size = 8))+   
+  theme(plot.title = element_text(size = 20,vjust = 1.5))+
+  theme(strip.text = element_text(size=7))+
+  theme(axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0)))+
+  theme(legend.position = "none")+
+  theme(axis.title.x = element_text(margin = margin(t = 10, r = 15, b = 0, l = 0)))+
+  scale_y_continuous(labels = function(x) format(x,big.mark = "'", scientific = FALSE))
+ 
+```
+
+## Average yield per carrier type and O-D
+
+This is classical bar chart showing the price (average yield) offered on main routes.
+
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
+
+peer_report_grouped_15_graph <- peer_report_grouped_15 %>% 
+  group_by(OD) %>% 
+  filter (players == "MI-123") %>% 
+  arrange(-avge_yield)
+  #mutate (OD = factor (OD,levels = unique (OD)))
+
+ggplot(data = peer_report_grouped_15_graph, 
+       mapping = aes(x = OD,y = avge_yield)) +
+  geom_col(color = "darkblue", fill = "darkblue")+
+  labs(title = "Average yield for MI-123 carrier",
+       subtitle = "Top 15 major routes",
+       x = "Origin - Destination",
+       y = "Average yield",
+       caption = "Source: Mit")+
+  theme_economist()+
+  scale_y_discrete()+
+  theme (axis.text.x=element_text(angle=90, hjust=1))+
+  theme(axis.text = element_text(size = 8))+   
+  theme(plot.title = element_text(size = 18,vjust = 1.5))+
+  theme(strip.text = element_text(size=7))+
+  theme(axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0)))+
+  theme(axis.title.x = element_text(margin = margin(t = 10, r = 15, b = 0, l = 0)))
+  
+
+```
+
+## This charts shows the average yield per carrier type
+
+Very often, it is helpful to visualize several parameters on a single chart. The figure below shows the average yield on main routes as well as the number of carriers (and their characteristics) operating on these routes.
+
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
+
+ggplot(data = peer_report_grouped_15, 
+       mapping = aes(x = OD,y = avge_yield, colour = players)) +
+  geom_jitter(with = 0.2,)+
+  labs(title = "Average yield per carrier type",
+       subtitle = "Top 15 major routes",
+       x = "Origin - Destination",
+       y = "Average yield",
+       caption = "Source: Mit")+
+  theme_economist()+
+  scale_y_discrete()+
+  theme (axis.text.x=element_text(angle=90, hjust=1))+
+  theme(axis.text = element_text(size = 8))+   
+  theme(plot.title = element_text(size = 18,vjust = 1.5))+
+  theme(strip.text = element_text(size=7))+
+  theme(axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0)))+
+  theme(axis.title.x = element_text(margin = margin(t = 10, r = 15, b = 0, l = 0)))+
+  theme(legend.position = "bottom",legend.title = element_text(size = 10),legend.text = element_text(size = 10))
+
+```
+
+## This chart shows the average yield per carrier type
+
+Finally, the last figure combine average yield per carrier as well as an indication of the share of market (SoM) on some selected routes. 
+
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
+
+# Calculation of the most frequent OD
+top5 <- peer_report %>% 
+  group_by(OD) %>% 
+  count() %>% 
+  arrange(-n) %>% 
+  head (5) %>% 
+  pull(OD)
+
+peer_report_grouped_5 <- peer_report %>% 
+  filter (OD %in% top5) %>% 
+  filter(! players == "MARKET") %>%  # removing market from the dataset
+  group_by(OD,players) %>% 
+  summarise (avge_weight = mean(weight),
+             avge_yield = mean(yield),
+             avge_share = mean(share))
+
+ggplot(data = peer_report_grouped_5, 
+       mapping = aes(x = OD,y = avge_yield, colour = players, size=avge_share)) +
+  geom_jitter(with = 0.2,)+
+  labs(title = "Average yield per carrier type",
+       subtitle = "Top 5 major routes, carrier classified by SoM",
+       x = "Origin - Destination",
+       y = "Average yield",
+       size = "Average SoM",
+       col = "Players",
+       caption = "Source: Mit")+
+  theme_economist()+
+  scale_y_discrete()+
+  theme (axis.text.x=element_text(angle=90, hjust=1))+
+  theme(axis.text = element_text(size = 8))+   
+  theme(plot.title = element_text(size = 18,vjust = 1.5))+
+  theme(strip.text = element_text(size=7))+
+  theme(axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0)))+
+  theme(axis.title.x = element_text(margin = margin(t = 10, r = 15, b = 0, l = 0)))+
+  theme(legend.position = "right",legend.title = element_text(size = 10),legend.text = element_text(size = 8))
+
+```
+
