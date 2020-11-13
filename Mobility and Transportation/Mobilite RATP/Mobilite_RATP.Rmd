@@ -36,6 +36,7 @@ library(dplyr)
 library(stringr)
 library(fuzzyjoin)
 library(ggthemes)
+library (gganimate)
 
 # Chargement du fichier 
 
@@ -54,6 +55,8 @@ pos_geo2 <- pos_geo %>%
 
 ### Statistiques descriptives générales
 #### Fréquentation 
+Quelles sont les 30 stations les plus fréquentées ? Le graphique ci-dessous est un exemple de visualisation dynamique mais celui-ci peut-être également affiché en statique.
+
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
 options(scipen = 1000)
@@ -74,11 +77,21 @@ trafic_annuel_reseau_2019 %>%
   ) +
   theme(legend.key.size = unit(0.5, "cm"))+
   theme(axis.text.y  = element_text(hjust = 1, size = 6))+   
-  scale_x_continuous(labels = unit_format(unit = "M", scale = 1e-6))
-
+  scale_x_continuous(labels = unit_format(unit = "M", scale = 1e-6))+
+# from here the gganimate part starts
+  transition_states(
+    Station,
+    transition_length = 2,
+    state_length = 1
+  ) +
+  shadow_mark()+
+  enter_fade()
+  
 ```
 
 #### Moyenne, fréquentation maximale et minimale
+Quelle est la fréquentation maximale et minimale par mode de transport ?
+
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
 basic_stat <- trafic_annuel_reseau_2019 %>% 
@@ -127,6 +140,8 @@ max_stat_metro
 ```
 
 ### Répartition des voyageurs RER et Métro 
+Quelle est la proportion entre le traffic métro et RER ?
+
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
 trafic_annuel_reseau_2019_prop <- trafic_annuel_reseau_2019 %>% 
@@ -169,6 +184,8 @@ coord_RER <-pos_geo2 %>%
 ```
 
 ### Répartition des voyageurs sur les lignes principales et par ville (hors Paris) 
+Quelle est la demande par moyen de transport et par station, en se focalisant sur les 25 stations les plus utilisées ?
+
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
 trafic_annuel_reseau_2019_group <- trafic_annuel_reseau_2019 %>% 
