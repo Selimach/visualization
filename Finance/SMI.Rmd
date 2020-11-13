@@ -138,7 +138,24 @@ g3 + g1_bis +
 
 ***
 
-In the next chart, simple forecast models are implemented to predict the values of the SMI, taking into account pre-covid period. Three models are presented here. The first one is a naive prediction, which consist of using the last value of the time series to predict the future. The second model, drift, consist of drawing a line between the first and the last observation to extrapolate future values.  The last is simply a model a mean of the time series. 
+An interesting feature is to animate the chart
+
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
+
+library(gganimate)
+
+anim <- g3 +
+  transition_reveal(date)
+
+anim
+
+
+```
+
+
+***
+
+In the next chart, simple forecast models are implemented to predict the values of the SMI, taking into account pre-covid period. Three models are presented here. The first one is a naive prediction, which consist of using the last value of the time series to predict the future. The second model, drift, consist of drawing a line between the first and the last observation to extrapolate future values.  The last one is a (simplistic) model showing the mean of the time series. 
 
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
@@ -178,7 +195,7 @@ data_smi_fct %>%
   autoplot(data_smi2,level = NULL) +
   autolayer(data_smi_pre_covid, price, color = "blue") +
   autolayer(anchor, price) +
-  ggtitle("Daily SMI and Projection") +
+  ggtitle("Daily SMI and Projection")+
   xlab("Days") + ylab("Price in CHF") +
   guides(colour = guide_legend(title = "Forecast"))+
   scale_y_continuous(labels=function(x) format(x, big.mark = "'", decimal.mark = ",", scientific = FALSE))+
@@ -187,5 +204,6 @@ data_smi_fct %>%
   theme(legend.position= "bottom")
 
 ```
+
 
 
