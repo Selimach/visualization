@@ -28,12 +28,18 @@ dashboards.
 
 -----
 
+An interesting feature is to animate the chart
+
+![](SMI_files/figure-gfm/unnamed-chunk-5-1.gif)<!-- -->
+
+-----
+
 In the next chart, simple forecast models are implemented to predict the
 values of the SMI, taking into account pre-covid period. Three models
 are presented here. The first one is a naive prediction, which consist
 of using the last value of the time series to predict the future. The
 second model, drift, consist of drawing a line between the first and the
-last observation to extrapolate future values. The last is simply a
-model a mean of the time series.
+last observation to extrapolate future values. The last one is a
+(simplistic) model showing the mean of the time series.
 
-![](SMI_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](SMI_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
