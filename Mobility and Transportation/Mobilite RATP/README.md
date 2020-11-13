@@ -27,9 +27,15 @@ sur le réseau RATP ne sont pas comptabilisés.
 
 #### Fréquentation
 
-![](Mobilite_RATP_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+Quelles sont les 30 stations les plus fréquentées ? Le graphique
+ci-dessous est un exemple de visualisation dynamique mais celui-ci
+peut-être également affiché en statique.
+
+![](Mobilite_RATP_files/figure-gfm/unnamed-chunk-2-1.gif)<!-- -->
 
 #### Moyenne, fréquentation maximale et minimale
+
+Quelle est la fréquentation maximale et minimale par mode de transport ?
 
 <table class="table" style="margin-left: auto; margin-right: auto;">
 
@@ -229,8 +235,7 @@ Métro
 
 <td style="text-align:left;">
 
-GARE DU
-NORD
+GARE DU NORD
 
 </td>
 
@@ -248,8 +253,14 @@ NORD
 
 ### Répartition des voyageurs RER et Métro
 
+Quelle est la proportion entre le traffic métro et RER
+?
+
 ![](Mobilite_RATP_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 ### Répartition des voyageurs sur les lignes principales et par ville (hors Paris)
+
+Quelle est la demande par moyen de transport et par station, en se
+focalisant sur les 25 stations les plus utilisées ?
 
 ![](Mobilite_RATP_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
