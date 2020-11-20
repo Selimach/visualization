@@ -5,7 +5,7 @@ date: "11/20/2020"
 output: github_document
 ---
 
-The objectif is to plot on a map some features of the city of Geneva including bike paths and alos main train station. This visualisation can be complemented by other information if available, such as road traffic during the day.
+The objective is to plot on a map some features of the city of Geneva including bike paths and also main train station. This visualization can be complemented by other information if available, such as road traffic during the day.
 
 ### City of Geneva 
 
@@ -23,7 +23,6 @@ library(sf)
 library(osmdata)
 
 ```
-
 
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
 
@@ -80,6 +79,8 @@ getbb("geneva") %>%
 
 ***
 ### City of Nyon
+
+The following example is the creation of a map of the city of Nyon, focusing on main roads and pedestrian streets.
 
 ```{r, warning =FALSE, message=FALSE, echo = FALSE}
 

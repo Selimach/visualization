@@ -3,8 +3,8 @@ cartography
 Selim Ach
 11/20/2020
 
-The objectif is to plot on a map some features of the city of Geneva
-including bike paths and alos main train station. This visualisation can
+The objective is to plot on a map some features of the city of Geneva
+including bike paths and also main train station. This visualization can
 be complemented by other information if available, such as road traffic
 during the
     day.
@@ -37,5 +37,8 @@ during the
 -----
 
 ### City of Nyon
+
+The following example is the creation of a map of the city of Nyon,
+focusing on main roads and pedestrian streets.
 
 ![](maps_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
