@@ -21,6 +21,7 @@ library(dplyr)
 library(tidyverse)
 library(sf)
 library(osmdata)
+library(patchwork)
 
 ```
 
@@ -87,30 +88,73 @@ The following example is the creation of a map of the city of Nyon, focusing on 
 # Ploting the city of Nyon and associated roads
 
 # nyon_area <- opq(c(6.086254,46.344439,6.333446,46.441524))
-# Ploting just for fun but strugling to find access to additional SHP layers
+# Ploting just for fun but strugling to find access to additional  layers
 
-getbb("nyon") %>%
-  opq() %>%
+
+small_streets <- opq(c(6.2, 46.36, 6.26, 46.41)) %>%
   add_osm_feature(
     key = "highway",
     value = c(
       "residential", "living_street",
-      "service", "footway"
-    )
-  ) %>% 
+      "unclassified","footway")
+  ) %>%
   osmdata_sf() %>%
-  purrr::pluck("osm_lines") %>%
-  ggplot() +
-  geom_sf(aes(color = highway))+
-  geom_sf(data = river, fill = "#3182bd", alpha = 0.3) +
+  purrr::pluck("osm_lines")
+
+# bigger streets
+streets <- opq(c(6.2, 46.36, 6.26, 46.41)) %>%
+  add_osm_feature(
+    key = "highway",
+    value = c(
+      "motorway", "primary",
+      "secondary", "tertiary"
+    )
+  ) %>%
+  osmdata_sf() %>%
+  purrr::pluck("osm_lines")
+
+ggplot() + 
+  geom_sf(data = streets, color = "#fdbb84") +
+  geom_sf(data = small_streets, color = "#fee8c8")+ 
+geom_sf(data = river, fill = "#3182bd", alpha = 0.3) +
     geom_sf(data = lakes, fill = "#3182bd", alpha = 0.3) + #lake layer
   coord_sf(
     xlim = c(6.2,6.26),   
     ylim = c(46.36,46.41),
     expand = FALSE) + 
-  labs(title = "City of Nyon and Suburbs",
-       subtite= "Main roads")+
+  theme(plot.title = element_text(hjust = 0))+
   theme_void()
+
+```
+
+Adding an extra layer with the map background, focusing this time on residential areas only (using the ggmap functionality)
+
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
+
+library(ggmap)
+
+q <- getbb("nyon") %>%
+opq() %>%
+  add_osm_feature(
+    key = "highway",
+    value = c("living_street","residential")
+    )
+
+env <- osmdata_sf(q)
+
+nyon_map <- get_map(getbb("Nyon"))
+
+ggmap(nyon_map)+
+  geom_sf(data = env$osm_points,
+          inherit.aes = FALSE,
+          colour = "#238443",
+          fill = "#004529",
+          alpha = .5,
+          size = 2,
+          shape = 21)+
+  theme(plot.title = element_text(hjust = 1))+
+  theme_void()
+
 
 ```
 
