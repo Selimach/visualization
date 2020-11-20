@@ -1,0 +1,115 @@
+---
+title: "cartography"
+author: "Selim Ach"
+date: "11/20/2020"
+output: github_document
+---
+
+The objectif is to plot on a map some features of the city of Geneva including bike paths and alos main train station. This visualisation can be complemented by other information if available, such as road traffic during the day.
+
+### City of Geneva 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
+
+library(readr)
+library(tidyverse)
+library(dplyr)
+library(tidyverse)
+library(sf)
+library(osmdata)
+
+```
+
+
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
+
+sitg <- st_read("Data/SHP_CAD_BATIMENT_HORSOL_TOIT_SP/CAD_BATIMENT_HORSOL_TOIT_SP.shp")
+
+
+# Train stations
+geneva_station <- st_read("Data/SHP_AGGLO_GARES/AGGLO_GARES.shp")
+
+# Bike paths
+geneva_bike <- st_read("Data/SHP_OTC_AMENAG_2ROUES/OTC_AMENAG_2ROUES.shp")
+
+#lake geneva
+lakes <- opq(c(6.093979, 46.185654, 6.206932, 46.231885)) %>%
+  add_osm_feature(key = "natural", value = "water") %>%
+  osmdata_sf() %>%
+  unname_osmdata_sf() %>%   
+  purrr::pluck("osm_multipolygons") 
+
+#river geneva
+river <- opq(c(6.093979, 46.185654, 6.206932, 46.231885)) %>% 
+add_osm_feature(key = 'waterway', value = 'river') %>%
+osmdata_sf() %>%
+purrr::pluck('osm_lines')
+
+
+getbb("geneva") %>%
+  opq() %>%
+  add_osm_feature(
+    key = "highway",
+    value = c(
+      "motorway", "primary",
+      "secondary", "tertiary"
+    )
+  ) %>%
+  osmdata_sf() %>%
+  purrr::pluck("osm_lines") %>%
+  ggplot() +
+  geom_sf(data = sitg) + # sitg layer
+  geom_sf(data = geneva_bike, color = "dark green", size = 1 ) + # bike path layer
+  geom_sf(data = geneva_station, color = "red", size = 3) + # Station layer
+  geom_sf(data = lakes, fill = "#3182bd", alpha = 0.3) + #lake layer
+  geom_sf(data = river,  color = "#3182bd", size = 1) + #river layer
+  coord_sf(
+    xlim = c(6.10, 6.20),
+    ylim = c(46.185, 46.231885),
+    expand = FALSE
+  )+
+  labs(title = "City of Geneva with location of train stations and bike paths",
+       subtite= " ")+
+  theme_void()
+
+```
+
+***
+### City of Nyon
+
+```{r, warning =FALSE, message=FALSE, echo = FALSE}
+
+# Ploting the city of Nyon and associated roads
+
+# nyon_area <- opq(c(6.086254,46.344439,6.333446,46.441524))
+# Ploting just for fun but strugling to find access to additional SHP layers
+
+getbb("nyon") %>%
+  opq() %>%
+  add_osm_feature(
+    key = "highway",
+    value = c(
+      "residential", "living_street",
+      "service", "footway"
+    )
+  ) %>% 
+  osmdata_sf() %>%
+  purrr::pluck("osm_lines") %>%
+  ggplot() +
+  geom_sf(aes(color = highway))+
+  geom_sf(data = river, fill = "#3182bd", alpha = 0.3) +
+    geom_sf(data = lakes, fill = "#3182bd", alpha = 0.3) + #lake layer
+  coord_sf(
+    xlim = c(6.2,6.26),   
+    ylim = c(46.36,46.41),
+    expand = FALSE) + 
+  labs(title = "City of Nyon and Suburbs",
+       subtite= "Main roads")+
+  theme_void()
+
+```
+
