@@ -42,3 +42,8 @@ The following example is the creation of a map of the city of Nyon,
 focusing on main roads and pedestrian streets.
 
 ![](maps_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+
+Adding an extra layer with the map background, focusing this time on
+residential areas only (using the ggmap functionality)
+
+![](maps_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
