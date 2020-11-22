@@ -264,3 +264,12 @@ Quelle est la demande par moyen de transport et par station, en se
 focalisant sur les 25 stations les plus utilisées ?
 
 ![](Mobilite_RATP_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+
+-----
+
+Le graphique suivant est une analyse de correlation entre le nombre de
+correspondance par ville) et le nombre de passagers transportés, ceci
+afin d’identifier les villes fortement connectées au reste du réseau de
+métro.
+
+![](Mobilite_RATP_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
