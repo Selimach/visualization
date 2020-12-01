@@ -39,7 +39,7 @@ ggplot(data = daily_traffic_2019,
   scale_y_continuous(label=comma)+
   geom_smooth(method = "loess",color = "red")+
   labs(title = "Airport daily traffic",
-       subtitle = "Take-offs and landings since January 2018",
+       subtitle = "Take-offs and landings",
        x = "Date",
        y = "Number of flights",
        caption = "Source: Eurocontrol")+
