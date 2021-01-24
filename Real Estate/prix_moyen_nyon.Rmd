@@ -17,7 +17,8 @@ monofont: Calibri
 spacing: singlesplacing
 fig_caption: yes
 indent: false
-output: pdf_document
+output: github_document
+  
 ---
 
 ## Données
