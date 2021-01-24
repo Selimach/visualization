@@ -1,0 +1,167 @@
+---
+title: "Prix moyen de l'immobilier à Nyon"
+author: "Selim Ach"
+date: "`r format(Sys.time(), '%d/%m/%y')`"
+header-includes:
+    - \usepackage{setspace}\singlespacing
+    - \usepackage{float}
+    - \usepackage{titling}
+    - \setlength{\droptitle}{-4em}
+#Abstract: "Préambule"
+#keywords: "My keywords"
+geometry: margin=1in
+fontsize: 10 pt
+mainfont: Calibri
+sansfont: Calibri
+monofont: Calibri
+spacing: singlesplacing
+fig_caption: yes
+indent: false
+output: pdf_document
+---
+
+## Données
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+
+options(knitr.table.format = "latex")
+
+#https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html
+#https://cran.microsoft.com/snapshot/2017-04-21/web/packages/kableExtra/README.html
+
+```
+
+```{r}
+library(readxl)
+library(ggplot2)
+library(tidyverse)
+library(janitor)
+library(kableExtra)
+
+```
+
+```{r}
+
+liste_nyon_excel <- read_excel("Data/liste_nyon_excel.xlsx",
+    sheet = "Feuille 1", skip = 1) %>% 
+  clean_names()
+
+prix_moyen <- liste_nyon_excel %>% 
+  mutate(prix_moyen = prix/superficie_m2) %>% 
+  select(id,superficie_m2,gamme,localisation,detail,prix,prix_moyen) %>% 
+  kable(format = "latex", booktabs = T,format.args = list(big.mark = "'"),digits = 1) %>%
+  kable_styling(latex_options = c("striped", "hold_position"),full_width = F, position="left")
+
+prix_moyen
+
+```
+
+```{r}
+
+pull_id <- liste_nyon_excel %>% 
+  select(id) %>% 
+  filter (id == max(id)) %>% 
+  pull()
+
+```
+
+- Prix exprimé en CHF.
+- Entrée de Gamme: bien en dehors du centre ville.
+- Medium: bien proche du centre ville, bon état mais sans cachet particulier (ou avec cachet mais avec d'importantes rénovations à réaliser).
+- Premium: bien neuf d'exception.
+- n: nombre d'appartement (échantillion total = `r pull_id`)
+
+## Prix Moyen - Global 
+```{r}
+
+prix_moyen_global <- liste_nyon_excel %>% 
+  summarise(n=n(),
+            superficie_moyenne = mean(superficie_m2),
+            superficie_totale = sum(superficie_m2),
+            prix_total = sum(prix)) %>% 
+  mutate(prix_moyen = prix_total/superficie_totale) %>% 
+  select(n,superficie_moyenne,prix_moyen) %>% 
+  kable(format = "latex", booktabs = T,format.args = list(big.mark = "'"),digits = 1) %>%
+  kable_styling(latex_options = c("striped", "hold_position"),full_width = F, position="left")
+
+prix_moyen_global
+
+```
+
+## Prix Moyen - Global (pondéré et habitable)
+
+```{r}
+
+prix_moyen_global <- liste_nyon_excel %>% 
+  group_by(detail) %>% 
+  summarise(n=n(),
+            superficie_moyenne = mean(superficie_m2),
+            superficie_totale = sum(superficie_m2),
+            prix_total = sum(prix)) %>% 
+  mutate(prix_moyen = prix_total/superficie_totale) %>% 
+  select(n,detail,superficie_moyenne,prix_moyen) %>% 
+  kable(format = "latex", booktabs = T,format.args = list(big.mark = "'"),digits = 1) %>%
+  kable_styling(latex_options = c("striped", "hold_position"),full_width = F, position="left")
+
+prix_moyen_global
+
+```
+
+## Prix Moyen - Gamme
+
+```{r}
+
+prix_moyen_gamme <- liste_nyon_excel %>% 
+  group_by(gamme) %>% 
+  summarise(n=n(),
+            superficie_moyenne = mean(superficie_m2),
+            superficie_totale = sum(superficie_m2),
+            prix_total = sum(prix))%>% 
+  mutate(prix_moyen = prix_total/superficie_totale) %>% 
+  select(n, gamme,prix_moyen) %>% 
+  kable(format = "latex", booktabs = T,format.args = list(big.mark = "'"),digits = 1) %>%
+  kable_styling(latex_options = c("striped", "hold_position"),full_width = F, position="left")
+
+prix_moyen_gamme
+
+```
+
+## Prix Moyen - Localisation
+
+```{r}
+
+prix_moyen_localisation <- liste_nyon_excel %>% 
+  group_by(localisation) %>% 
+  summarise(n=n(),
+            superficie_moyenne = mean(superficie_m2),
+            superficie_totale = sum(superficie_m2),
+            prix_total = sum(prix)) %>% 
+  mutate(prix_moyen = prix_total/superficie_totale)%>% 
+  select(n,localisation,superficie_moyenne,prix_moyen) %>% 
+  kable(format = "latex", booktabs = T,format.args = list(big.mark = "'"),digits = 1) %>%
+  kable_styling(latex_options = c("striped", "hold_position"),full_width = F, position="left")
+  
+prix_moyen_localisation
+
+```
+
+## Prix Moyen - Localisation & Gamme
+
+```{r}
+
+prix_moyen_localisation <- liste_nyon_excel %>% 
+  group_by(gamme,localisation,detail) %>% 
+  summarise(n=n(),
+            superficie_moyenne = mean(superficie_m2),
+            superficie_totale = sum(superficie_m2),
+            prix_total = sum(prix)) %>% 
+  mutate(prix_moyen = prix_total/superficie_totale)%>% 
+  select(n,gamme,localisation,detail,superficie_moyenne,prix_moyen) %>% 
+  kable(format = "latex", booktabs = T,format.args = list(big.mark = "'"),digits = 1) %>%
+  kable_styling(latex_options = c("striped", "hold_position"),full_width = F, position="left")
+  
+prix_moyen_localisation
+
+```
+
