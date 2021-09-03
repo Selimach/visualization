@@ -3,12 +3,12 @@ Restaurant
 Selim Ach
 10/5/2020
 
-Very often data are presented in a tabular format and the challenge is
-to be able to process information in order to provide relevant insights.
+Very often data are presented in a tabular format and the challenge is to
+be able to process information in order to provide relevant insights.
 
 It is also sometimes useful to display all the data sample, for a first
 visual inspection (e.g. identify potential outliers) and take a decision
-on how to narrow down the sample to the variables of interest.
+on how to narrow the sample to the variables of interest.
 
 Hereafter is an example of how data can be presented to have a first
 glance at the information and another chart with an additional layer of
