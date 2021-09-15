@@ -40,5 +40,5 @@ a - High-frequency charts of daily SMI (Swiss Market Index), with the possibilit
 
 [5- Real Estate](https://github.com/Selimach/visualization/tree/master/Real%20Estate)
 
-a- Overview of the real estate market in Nyon (Switzerland). The report can updated on a regular basis using the features of the Rmarkdown..
+a- Overview of the real estate market in Nyon (Switzerland). The report can updated on a regular basis using the features of the Rmarkdown
 
