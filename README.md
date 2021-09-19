@@ -6,6 +6,8 @@
 
 ### These are few examples of visualization using R!
 
+The examples provided here are based on public data.
+
 --------------------------------------------------
 
 [1-Mobility and Transportation](https://github.com/Selimach/visualization/tree/master/Mobility%20and%20Transportation)
